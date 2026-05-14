@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--
+  ============================================================
+  VIBE GEARS — Equipment Store
+  File: vibestore.html
+  Linked from: thevibe.html (main gym page)
+  Theme: Matches The Vibe Boxing Club — dark, red accents
+  ============================================================
+-->
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VibeGears — The Vibe Boxing Club Store</title>
+
+  <!-- Same fonts as main site -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Barlow:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Font Awesome icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+
+  <!-- Store stylesheet (separate from main site) -->
+  <link rel="stylesheet" href="vibestore.css" />
+</head>
+
+<body>
+
+  <!-- ============================================================
+       HEADER
+       Same style as thevibe.html header.
+       Left: logo + back-to-gym link
+       Centre: search bar
+       Right: nav tabs (All Items / Special Discounts)
+  ============================================================ -->
+  <header class="store-header" id="store-header">
+
+    <!-- ── LOGO / BRAND ── -->
+    <div class="store-logo-block">
+
+      <!-- Back arrow — returns to main gym page -->
+      <a href="thevibe.html" class="back-link" aria-label="Back to main site">
+        <i class="fas fa-arrow-left"></i>
+      </a>
+
+      <!-- Store name -->
+      <div class="store-logo">
+        <span class="store-logo-tag">THE VIBE BOXING CLUB</span>
+        <span class="store-logo-name">VIBE <span class="store-logo-accent">GEARS</span></span>
+      </div>
+
+    </div>
+    <!-- END logo -->
+
+
+    <!-- ── SEARCH BAR ──
+         Filters visible product cards in real time as user types.
+         JS (vibestore.js inline) handles the filtering logic.
+         Only shows cards whose name matches the search text.
+    -->
+    <div class="search-wrapper">
+      <i class="fas fa-search search-icon"></i>
+      <input
+        type="search"
+        id="product-search"
+        class="search-input"
+        placeholder="Search gear... (e.g. gloves, headgear)"
+        autocomplete="off"
+        aria-label="Search products"
+      />
+      <!-- Clear button — appears when user has typed something -->
+      <button class="search-clear" id="search-clear" aria-label="Clear search" style="display:none;">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <!-- END search bar -->
+
+
+    <!-- ── HAMBURGER (mobile only) ── -->
+    <button class="store-hamburger" id="store-hamburger" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </header>
+  <!-- END HEADER -->
+
+
+  <!-- ============================================================
+       SECTION NAVIGATION TAB BAR
+       Two tabs: All Items | Special Discounts
+       Clicking a tab shows/hides the relevant product grid section.
+       JS handles the tab switching logic.
+  ============================================================ -->
+  <nav class="section-tabs" id="section-tabs" aria-label="Store sections">
+
+    <!-- Tab 1: All regular items (active by default) -->
+    <button
+      class="tab-btn tab-active"
+      data-tab="all-items"
+      aria-selected="true"
+    >
+      <i class="fas fa-store"></i>
+      All Items
+    </button>
+
+    <!-- Tab 2: Special discount items -->
+    <button
+      class="tab-btn"
+      data-tab="special-discounts"
+      aria-selected="false"
+    >
+      <i class="fas fa-tag"></i>
+      Special Discounts
+    </button>
+
+  </nav>
+  <!-- END TAB BAR -->
+
+
+  <!-- ============================================================
+       MAIN CONTENT AREA
+  ============================================================ -->
+  <main class="store-main">
+
+
+    <!-- ==========================================================
+         SECTION: ALL ITEMS
+         id="section-all-items" — shown when "All Items" tab active
+         Grid: 4 columns desktop, 2 columns mobile
+         5 active products + 5 commented out for future use
+    ========================================================== -->
+    <section class="products-section" id="section-all-items">
+
+      <!-- Section heading -->
+      <div class="products-section-header">
+        <h2 class="products-title">
+          ALL <span class="accent">GEAR</span>
+        </h2>
+        <!-- Live count of visible items — updated by JS search filter -->
+        <span class="products-count" id="items-count"></span>
+      </div>
+
+      <!-- ── PRODUCTS GRID ──
+           4 columns on desktop/laptop
+           2 columns on mobile (CSS handles this via media query)
+      -->
+      <div class="products-grid" id="products-grid-all">
+
+
+        <!-- ══════════════════════════════════════
+             PRODUCT CARD 1: BOXING GLOVES
+        ══════════════════════════════════════ -->
+        <article class="product-card" data-name="boxing gloves">
+
+          <!-- Product image area
+               Replace url('') with your product image path
+               e.g. url('images/gloves.jpg')
+               Recommended: square or 4:3 ratio images
+          -->
+          <div class="product-image">
+            <!-- Image placeholder — delete this div once real image is added -->
+            <div class="product-img-placeholder">
+              <i class="fas fa-mitten"></i>
+              <span>Boxing Gloves</span>
+            </div>
+            <!-- REAL IMAGE (uncomment when ready):
+            <img src="images/gloves.jpg" alt="Boxing Gloves" loading="lazy" />
+            -->
+
+            <!-- Member discount badge — top right corner of image -->
+            <div class="member-badge">
+              <i class="fas fa-star"></i> 10% OFF for Members
+            </div>
+          </div>
+
+          <!-- Product details below image -->
+          <div class="product-info">
+
+            <!-- Product name — shown in red per design spec -->
+            <h3 class="product-name">Boxing Gloves</h3>
+
+            <!-- Short description -->
+            <p class="product-desc">
+              Professional-grade leather boxing gloves. Wrist support strap.
+              Available in 10oz, 12oz, 14oz, 16oz.
+            </p>
+
+            <!-- ── PRICING BLOCK ──
+                 Actual price + member discount price shown together
+            -->
+            <div class="product-pricing">
+              <!-- Actual price -->
+              <span class="product-price">NPR 3,500</span>
+              <!-- Member price = 10% off (calculated manually for display) -->
+              <span class="member-price">
+                <i class="fas fa-star"></i> Members: NPR 3,150
+              </span>
+            </div>
+
+            <!-- ── BUY NOW BUTTON ──
+                 Opens the order modal/form below
+                 data-product passes the product name into the form
+            -->
+            <button
+              class="btn-buy"
+              data-product="Boxing Gloves"
+              data-price="3500"
+              onclick="openOrderModal(this)"
+            >
+              <i class="fas fa-shopping-bag"></i> Buy Now
+            </button>
+
+          </div>
+        </article>
+        <!-- END PRODUCT 1 -->
+
+
+        <!-- ══════════════════════════════════════
+             PRODUCT CARD 2: HEADGEAR
+        ══════════════════════════════════════ -->
+        <article class="product-card" data-name="headgear head gear">
+
+          <div class="product-image">
+            <div class="product-img-placeholder">
+              <i class="fas fa-hard-hat"></i>
+              <span>HeadGear</span>
+            </div>
+            <!-- <img src="images/headgear.jpg" alt="HeadGear" loading="lazy" /> -->
+            <div class="member-badge">
+              <i class="fas fa-star"></i> 10% OFF for Members
+            </div>
+          </div>
+
+          <div class="product-info">
+            <h3 class="product-name">HeadGear</h3>
+            <p class="product-desc">
+              Full-face protection headgear with cheek guards.
+              Padded interior, adjustable velcro strap.
+            </p>
+            <div class="product-pricing">
+              <span class="product-price">NPR 4,200</span>
+              <span class="member-price">
+                <i class="fas fa-star"></i> Members: NPR 3,780
+              </span>
+            </div>
+            <button
+              class="btn-buy"
+              data-product="HeadGear"
+              data-price="4200"
+              onclick="openOrderModal(this)"
+            >
+              <i class="fas fa-shopping-bag"></i> Buy Now
+            </button>
+          </div>
+
+        </article>
+        <!-- END PRODUCT 2 -->
+
+
+        <!-- ══════════════════════════════════════
+             PRODUCT CARD 3: HAND WRAP
+        ══════════════════════════════════════ -->
+        <article class="product-card" data-name="hand wrap handwrap wraps">
+
+          <div class="product-image">
+            <div class="product-img-placeholder">
+              <i class="fas fa-band-aid"></i>
+              <span>Hand Wrap</span>
+            </div>
+            <!-- <img src="images/handwrap.jpg" alt="Hand Wrap" loading="lazy" /> -->
+            <div class="member-badge">
+              <i class="fas fa-star"></i> 10% OFF for Members
+            </div>
+          </div>
+
+          <div class="product-info">
+            <h3 class="product-name">Hand Wrap</h3>
+            <p class="product-desc">
+              4.5m elastic cotton hand wraps. Protects knuckles and wrist.
+              Machine washable. Sold as a pair.
+            </p>
+            <div class="product-pricing">
+              <span class="product-price">NPR 650</span>
+              <span class="member-price">
+                <i class="fas fa-star"></i> Members: NPR 585
+              </span>
+            </div>
+            <button
+              class="btn-buy"
+              data-product="Hand Wrap"
+              data-price="650"
+              onclick="openOrderModal(this)"
+            >
+              <i class="fas fa-shopping-bag"></i> Buy Now
+            </button>
+          </div>
+
+        </article>
+        <!-- END PRODUCT 3 -->
+
+
+        <!-- ══════════════════════════════════════
+             PRODUCT CARD 4: GROIN GUARD
+        ══════════════════════════════════════ -->
+        <article class="product-card" data-name="groin guard groin protection">
+
+          <div class="product-image">
+            <div class="product-img-placeholder">
+              <i class="fas fa-shield-alt"></i>
+              <span>Groin Guard</span>
+            </div>
+            <!-- <img src="images/groinguard.jpg" alt="Groin Guard" loading="lazy" /> -->
+            <div class="member-badge">
+              <i class="fas fa-star"></i> 10% OFF for Members
+            </div>
+          </div>
+
+          <div class="product-info">
+            <h3 class="product-name">Groin Guard</h3>
+            <p class="product-desc">
+              High-impact protection groin guard. Anatomical fit.
+              Suitable for boxing, Muay Thai, and sparring.
+            </p>
+            <div class="product-pricing">
+              <span class="product-price">NPR 1,800</span>
+              <span class="member-price">
+                <i class="fas fa-star"></i> Members: NPR 1,620
+              </span>
+            </div>
+            <button
+              class="btn-buy"
+              data-product="Groin Guard"
+              data-price="1800"
+              onclick="openOrderModal(this)"
+            >
+              <i class="fas fa-shopping-bag"></i> Buy Now
+            </button>
+          </div>
+
+        </article>
+        <!-- END PRODUCT 4 -->
+
+
+        <!-- ══════════════════════════════════════
+             PRODUCT CARD 5: BOXING SHOES
+        ══════════════════════════════════════ -->
+        <article class="product-card" data-name="boxing shoes footwear">
+
+          <div class="product-image">
+            <div class="product-img-placeholder">
+              <i class="fas fa-shoe-prints"></i>
+              <span>Boxing Shoes</span>
+            </div>
+            <!-- <img src="images/boxingshoes.jpg" alt="Boxing Shoes" loading="lazy" /> -->
+            <div class="member-badge">
+              <i class="fas fa-star"></i> 10% OFF for Members
+            </div>
+          </div>
+
+          <div class="product-info">
+            <h3 class="product-name">Boxing Shoes</h3>
+            <p class="product-desc">
+              Lightweight high-top boxing boots. Non-slip sole.
+              Superior ankle support for ring movement.
+            </p>
+            <div class="product-pricing">
+              <span class="product-price">NPR 5,500</span>
+              <span class="member-price">
+                <i class="fas fa-star"></i> Members: NPR 4,950
+              </span>
+            </div>
+            <button
+              class="btn-buy"
+              data-product="Boxing Shoes"
+              data-price="5500"
+              onclick="openOrderModal(this)"
+            >
+              <i class="fas fa-shopping-bag"></i> Buy Now
+            </button>
+          </div>
+
+        </article>
+        <!-- END PRODUCT 5 -->
+
+
+        <!--
+        ══════════════════════════════════════════════════════
+        PRODUCTS 6–10: COMMENTED OUT — ACTIVATE WHEN READY
+        To show a product: remove the opening (< !--) and
+        closing (-- >) comment tags around the article block.
+        Update: data-name, placeholder icon, product-name,
+                product-desc, product-price, member-price,
+                data-product, data-price
+        ══════════════════════════════════════════════════════
+
+        <article class="product-card" data-name="product name keywords">
+          <div class="product-image">
+            <div class="product-img-placeholder">
+              <i class="fas fa-box"></i>
+              <span>Product 6</span>
+            </div>
+            <div class="member-badge"><i class="fas fa-star"></i> 10% OFF for Members</div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Product Name 6</h3>
+            <p class="product-desc">Short product description goes here.</p>
+            <div class="product-pricing">
+              <span class="product-price">NPR 0,000</span>
+              <span class="member-price"><i class="fas fa-star"></i> Members: NPR 0,000</span>
+            </div>
+            <button class="btn-buy" data-product="Product Name 6" data-price="0000" onclick="openOrderModal(this)">
+              <i class="fas fa-shopping-bag"></i> Buy Now
+            </button>
+          </div>
+        </article>
+
+        <article class="product-card" data-name="product name keywords">
+          <div class="product-image">
+            <div class="product-img-placeholder">
+              <i class="fas fa-box"></i>
+              <span>Product 7</span>
+            </div>
+            <div class="member-badge"><i class="fas fa-star"></i> 10% OFF for Members</div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Product Name 7</h3>
+            <p class="product-desc">Short product description goes here.</p>
+            <div class="product-pricing">
+              <span class="product-price">NPR 0,000</span>
+              <span class="member-price"><i class="fas fa-star"></i> Members: NPR 0,000</span>
+            </div>
+            <button class="btn-buy" data-product="Product Name 7" data-price="0000" onclick="openOrderModal(this)">
+              <i class="fas fa-shopping-bag"></i> Buy Now
+            </button>
+          </div>
+        </article>
+
+        <article class="product-card" data-name="product name keywords">
+          <div class="product-image">
+            <div class="product-img-placeholder">
+              <i class="fas fa-box"></i>
+              <span>Product 8</span>
+            </div>
+            <div class="member-badge"><i class="fas fa-star"></i> 10% OFF for Members</div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Product Name 8</h3>
+            <p class="product-desc">Short product description goes here.</p>
+            <div class="product-pricing">
+              <span class="product-price">NPR 0,000</span>
+              <span class="member-price"><i class="fas fa-star"></i> Members: NPR 0,000</span>
+            </div>
+            <button class="btn-buy" data-product="Product Name 8" data-price="0000" onclick="openOrderModal(this)">
+              <i class="fas fa-shopping-bag"></i> Buy Now
+            </button>
+          </div>
+        </article>
+
+        <article class="product-card" data-name="product name keywords">
+          <div class="product-image">
+            <div class="product-img-placeholder">
+              <i class="fas fa-box"></i>
+              <span>Product 9</span>
+            </div>
+            <div class="member-badge"><i class="fas fa-star"></i> 10% OFF for Members</div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Product Name 9</h3>
+            <p class="product-desc">Short product description goes here.</p>
+            <div class="product-pricing">
+              <span class="product-price">NPR 0,000</span>
+              <span class="member-price"><i class="fas fa-star"></i> Members: NPR 0,000</span>
+            </div>
+            <button class="btn-buy" data-product="Product Name 9" data-price="0000" onclick="openOrderModal(this)">
+              <i class="fas fa-shopping-bag"></i> Buy Now
+            </button>
+          </div>
+        </article>
+
+        <article class="product-card" data-name="product name keywords">
+          <div class="product-image">
+            <div class="product-img-placeholder">
+              <i class="fas fa-box"></i>
+              <span>Product 10</span>
+            </div>
+            <div class="member-badge"><i class="fas fa-star"></i> 10% OFF for Members</div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Product Name 10</h3>
+            <p class="product-desc">Short product description goes here.</p>
+            <div class="product-pricing">
+              <span class="product-price">NPR 0,000</span>
+              <span class="member-price"><i class="fas fa-star"></i> Members: NPR 0,000</span>
+            </div>
+            <button class="btn-buy" data-product="Product Name 10" data-price="0000" onclick="openOrderModal(this)">
+              <i class="fas fa-shopping-bag"></i> Buy Now
+            </button>
+          </div>
+        </article>
+
+        END COMMENTED PRODUCTS 6–10
+        -->
+
+
+      </div>
+      <!-- END products-grid-all -->
+
+      <!-- No results message — shown by JS when search finds nothing -->
+      <div class="no-results" id="no-results-all" style="display:none;">
+        <i class="fas fa-search"></i>
+        <p>No products found for "<span id="search-term-display"></span>"</p>
+        <button onclick="clearSearch()">Clear Search</button>
+      </div>
+
+    </section>
+    <!-- END SECTION: ALL ITEMS -->
+
+
+    <!-- ==========================================================
+         SECTION: SPECIAL DISCOUNTS
+         Hidden by default — shown when "Special Discounts" tab clicked
+         Shows original price crossed out + discounted price
+         4 discount cards commented out — activate when ready
+    ========================================================== -->
+    <section class="products-section" id="section-special-discounts" style="display:none;">
+
+      <div class="products-section-header">
+        <h2 class="products-title">
+          SPECIAL <span class="accent">DISCOUNTS</span>
+        </h2>
+        <p class="discount-note">
+          <i class="fas fa-tag"></i>
+          Limited time offers — grab them before they're gone!
+        </p>
+      </div>
+
+      <div class="products-grid" id="products-grid-discount">
+
+        <!--
+        ══════════════════════════════════════════════════════
+        DISCOUNT PRODUCTS 1–4: ALL COMMENTED OUT
+        Activate when you have real discount products to list.
+
+        HOW TO USE:
+        - Set data-name for search to work
+        - Set original-price to the old price (shown struck through)
+        - Set discount-price to the new lower price
+        - Set data-price to the discounted price (used in order form)
+        - Update product-name, product-desc, member-price
+        - Add product image when ready
+
+        EXAMPLE ACTIVATED BELOW:
+
+        <article class="product-card discount-card" data-name="boxing gloves discount sale">
+
+          <div class="product-image">
+            <div class="product-img-placeholder">
+              <i class="fas fa-mitten"></i>
+              <span>Boxing Gloves</span>
+            </div>
+            <div class="member-badge"><i class="fas fa-star"></i> 10% OFF for Members</div>
+            <div class="discount-badge">SALE</div>
+          </div>
+
+          <div class="product-info">
+            <h3 class="product-name">Boxing Gloves — Special Edition</h3>
+            <p class="product-desc">
+              Limited stock special edition gloves. Same professional quality at a reduced price.
+            </p>
+
+            <div class="product-pricing discount-pricing">
+              <div class="price-row">
+                <span class="original-price">NPR 4,400</span>
+                <span class="discount-tag">-25%</span>
+              </div>
+              <span class="product-price discount-price">NPR 3,300</span>
+              <span class="member-price">
+                <i class="fas fa-star"></i> Members: NPR 2,970
+              </span>
+            </div>
+
+            <button class="btn-buy" data-product="Boxing Gloves Special Edition" data-price="3300" onclick="openOrderModal(this)">
+              <i class="fas fa-shopping-bag"></i> Buy Now
+            </button>
+          </div>
+
+        </article>
+
+        <article class="product-card discount-card" data-name="headgear discount sale">
+          <div class="product-image">
+            <div class="product-img-placeholder">
+              <i class="fas fa-hard-hat"></i>
+              <span>HeadGear</span>
+            </div>
+            <div class="member-badge"><i class="fas fa-star"></i> 10% OFF for Members</div>
+            <div class="discount-badge">SALE</div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">HeadGear — Clearance</h3>
+            <p class="product-desc">Previous season headgear at clearance pricing. Full protection, great value.</p>
+            <div class="product-pricing discount-pricing">
+              <div class="price-row">
+                <span class="original-price">NPR 5,000</span>
+                <span class="discount-tag">-20%</span>
+              </div>
+              <span class="product-price discount-price">NPR 4,000</span>
+              <span class="member-price"><i class="fas fa-star"></i> Members: NPR 3,600</span>
+            </div>
+            <button class="btn-buy" data-product="HeadGear Clearance" data-price="4000" onclick="openOrderModal(this)">
+              <i class="fas fa-shopping-bag"></i> Buy Now
+            </button>
+          </div>
+        </article>
+
+        <article class="product-card discount-card" data-name="hand wrap discount bundle">
+          <div class="product-image">
+            <div class="product-img-placeholder">
+              <i class="fas fa-band-aid"></i>
+              <span>Hand Wrap Bundle</span>
+            </div>
+            <div class="member-badge"><i class="fas fa-star"></i> 10% OFF for Members</div>
+            <div class="discount-badge">BUNDLE</div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Hand Wrap — 3-Pack Bundle</h3>
+            <p class="product-desc">3 pairs of hand wraps at a bundled price. Always have a fresh pair ready.</p>
+            <div class="product-pricing discount-pricing">
+              <div class="price-row">
+                <span class="original-price">NPR 1,950</span>
+                <span class="discount-tag">-23%</span>
+              </div>
+              <span class="product-price discount-price">NPR 1,500</span>
+              <span class="member-price"><i class="fas fa-star"></i> Members: NPR 1,350</span>
+            </div>
+            <button class="btn-buy" data-product="Hand Wrap 3-Pack Bundle" data-price="1500" onclick="openOrderModal(this)">
+              <i class="fas fa-shopping-bag"></i> Buy Now
+            </button>
+          </div>
+        </article>
+
+        <article class="product-card discount-card" data-name="boxing shoes sale discount">
+          <div class="product-image">
+            <div class="product-img-placeholder">
+              <i class="fas fa-shoe-prints"></i>
+              <span>Boxing Shoes</span>
+            </div>
+            <div class="member-badge"><i class="fas fa-star"></i> 10% OFF for Members</div>
+            <div class="discount-badge">SALE</div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Boxing Shoes — Last Season</h3>
+            <p class="product-desc">Previous season boxing boots on sale. Same quality, lower price. Limited sizes.</p>
+            <div class="product-pricing discount-pricing">
+              <div class="price-row">
+                <span class="original-price">NPR 6,500</span>
+                <span class="discount-tag">-15%</span>
+              </div>
+              <span class="product-price discount-price">NPR 5,525</span>
+              <span class="member-price"><i class="fas fa-star"></i> Members: NPR 4,973</span>
+            </div>
+            <button class="btn-buy" data-product="Boxing Shoes Last Season" data-price="5525" onclick="openOrderModal(this)">
+              <i class="fas fa-shopping-bag"></i> Buy Now
+            </button>
+          </div>
+        </article>
+
+        END COMMENTED DISCOUNT PRODUCTS 1–4
+        -->
+
+        <!-- Placeholder shown when no discount products are active -->
+        <div class="discount-empty-state" id="discount-empty">
+          <i class="fas fa-tag"></i>
+          <h3>No Active Discounts Right Now</h3>
+          <p>Check back soon — special offers drop regularly!</p>
+          <button class="tab-btn" onclick="switchTab('all-items')">
+            Browse All Items
+          </button>
+        </div>
+
+      </div>
+
+    </section>
+    <!-- END SECTION: SPECIAL DISCOUNTS -->
+
+
+  </main>
+  <!-- END MAIN -->
+
+
+  <!-- ============================================================
+       ORDER MODAL
+       Opens when "Buy Now" is clicked.
+       Contains:
+         - Product name & price summary
+         - COD info (Rs 75 delivery charge)
+         - Payment options: COD (active) | eSewa (disabled) | Khalti (disabled)
+         - Order form: Full Name, Email, Contact No, Location
+         - WhatsApp quick contact option
+  ============================================================ -->
+  <div class="modal-overlay" id="order-modal" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="modal-product-name">
+
+    <div class="modal-box">
+
+      <!-- Modal header with close button -->
+      <div class="modal-header">
+        <div>
+          <span class="modal-tag">Order Summary</span>
+          <!-- Product name filled by JS when modal opens -->
+          <h2 class="modal-product-name" id="modal-product-name">Product Name</h2>
+        </div>
+        <button class="modal-close" onclick="closeOrderModal()" aria-label="Close order form">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <!-- END modal header -->
+
+
+      <!-- ── DELIVERY & PAYMENT INFO ── -->
+      <div class="modal-delivery-info">
+
+        <!-- COD notice -->
+        <div class="delivery-badge">
+          <i class="fas fa-truck"></i>
+          Cash on Delivery (COD) — Delivery charge: <strong>NPR 75</strong>
+        </div>
+
+        <!-- Price summary — filled by JS -->
+        <div class="modal-price-summary">
+          <span class="modal-price-label">Item Price:</span>
+          <span class="modal-price-value" id="modal-item-price">NPR 0</span>
+        </div>
+        <div class="modal-price-summary">
+          <span class="modal-price-label">Delivery:</span>
+          <span class="modal-price-value">NPR 75</span>
+        </div>
+        <div class="modal-price-summary modal-total-row">
+          <span class="modal-price-label">Total:</span>
+          <span class="modal-price-value modal-total" id="modal-total-price">NPR 0</span>
+        </div>
+
+      </div>
+      <!-- END delivery info -->
+
+
+      <!-- ── PAYMENT METHOD SELECTOR ── -->
+      <div class="payment-options">
+        <p class="payment-label">Payment Method</p>
+        <div class="payment-btns">
+
+          <!-- COD — active and selectable -->
+          <button
+            class="payment-btn payment-btn-active"
+            id="pay-cod"
+            onclick="selectPayment('cod')"
+          >
+            <i class="fas fa-money-bill-wave"></i>
+            Cash on Delivery
+          </button>
+
+          <!-- eSewa — disabled, not yet available -->
+          <button
+            class="payment-btn payment-btn-disabled"
+            disabled
+            title="Coming soon"
+          >
+            <i class="fas fa-mobile-alt"></i>
+            eSewa
+            <span class="coming-soon-tag">Soon</span>
+          </button>
+
+          <!-- Khalti — disabled, not yet available -->
+          <button
+            class="payment-btn payment-btn-disabled"
+            disabled
+            title="Coming soon"
+          >
+            <i class="fas fa-wallet"></i>
+            Khalti
+            <span class="coming-soon-tag">Soon</span>
+          </button>
+
+        </div>
+      </div>
+      <!-- END payment options -->
+
+
+      <!-- ── ORDER FORM ──
+           All fields required.
+           On submit: JS validates, then either:
+           A) Opens WhatsApp with pre-filled order message, OR
+           B) Shows a confirmation (replace with Formspree later)
+      -->
+      <form class="order-form" id="order-form" novalidate>
+
+        <!-- Hidden field: carries product name into form submission -->
+        <input type="hidden" id="order-product" name="product" />
+        <!-- Hidden field: carries price -->
+        <input type="hidden" id="order-price" name="price" />
+
+        <!-- Full Name -->
+        <div class="order-form-group">
+          <label for="order-name">
+            <i class="fas fa-user"></i> Full Name
+          </label>
+          <input
+            type="text"
+            id="order-name"
+            name="name"
+            placeholder="Your full name"
+            required
+          />
+          <span class="order-error" id="err-name"></span>
+        </div>
+
+        <!-- Email -->
+        <div class="order-form-group">
+          <label for="order-email">
+            <i class="fas fa-envelope"></i> Email Address
+          </label>
+          <input
+            type="email"
+            id="order-email"
+            name="email"
+            placeholder="your@email.com"
+            required
+          />
+          <span class="order-error" id="err-email"></span>
+        </div>
+
+        <!-- Contact Number -->
+        <div class="order-form-group">
+          <label for="order-phone">
+            <i class="fas fa-phone"></i> Contact Number
+          </label>
+          <input
+            type="tel"
+            id="order-phone"
+            name="phone"
+            placeholder="98XXXXXXXX"
+            required
+          />
+          <span class="order-error" id="err-phone"></span>
+        </div>
+
+        <!-- Delivery Location -->
+        <div class="order-form-group">
+          <label for="order-location">
+            <i class="fas fa-map-marker-alt"></i> Delivery Location
+          </label>
+          <input
+            type="text"
+            id="order-location"
+            name="location"
+            placeholder="Your address / area (e.g. Thamel, Kathmandu)"
+            required
+          />
+          <span class="order-error" id="err-location"></span>
+        </div>
+
+        <!-- ── SUBMIT BUTTONS ── -->
+        <div class="order-submit-group">
+
+          <!-- Primary: Place Order (form submit)
+          <button type="submit" class="btn-order-submit">
+            <i class="fas fa-check-circle"></i> Place Order
+          </button> --> 
+          <!-- comment aahiley-ko-lago -->
+
+          <!-- Secondary: WhatsApp quick order -->
+          <!-- Replace 9779808872779 with your WhatsApp number -->
+          <button
+            type="button"
+            class="btn-whatsapp"
+            id="btn-whatsapp"
+            onclick="openWhatsApp()"
+          >
+            <i class="fab fa-whatsapp"></i> Order via WhatsApp
+          </button>
+
+        </div>
+
+        <!-- Form status message (success / error) -->
+        <div class="order-status" id="order-status"></div>
+
+      </form>
+      <!-- END order form -->
+
+    </div>
+    <!-- END modal-box -->
+
+  </div>
+  <!-- END ORDER MODAL -->
+
+
+  <!-- ============================================================
+       FOOTER
+       Matches main site footer style
+  ============================================================ -->
+  <footer class="store-footer">
+    <div class="store-footer-inner">
+      <span class="footer-brand-name">THE VIBE BOXING CLUB — VIBE GEARS</span>
+      <span class="footer-copy">© 2026 All Rights Reserved</span>
+      <a href="thevibe.html" class="footer-back-link">
+        <i class="fas fa-arrow-left"></i> Back to Main Site
+      </a>
+    </div>
+  </footer>
+
+
+  <!-- ============================================================
+       INLINE JAVASCRIPT
+       All store interactivity in one place.
+       No external JS file needed for this page.
+  ============================================================ -->
+  <script>
+
+    /* ============================================================
+       GLOBALS
+    ============================================================ */
+
+    // Currently selected payment method (only COD works for now)
+    let selectedPayment = 'cod';
+
+    // Current product being ordered (set when modal opens)
+    let currentProduct = { name: '', price: 0 };
+
+
+    /* ============================================================
+       TAB SWITCHING
+       Toggles between "All Items" and "Special Discounts" sections.
+    ============================================================ */
+
+    /**
+     * switchTab(tabId)
+     * Shows the section matching tabId, hides the other.
+     * Updates tab button active states.
+     * @param {string} tabId — 'all-items' or 'special-discounts'
+     */
+    function switchTab(tabId) {
+
+      // Update tab button styles
+      document.querySelectorAll('.tab-btn').forEach(function(btn) {
+        const isActive = btn.getAttribute('data-tab') === tabId;
+        btn.classList.toggle('tab-active', isActive);
+        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+
+      // Show/hide sections
+      document.getElementById('section-all-items').style.display =
+        tabId === 'all-items' ? 'block' : 'none';
+
+      document.getElementById('section-special-discounts').style.display =
+        tabId === 'special-discounts' ? 'block' : 'none';
+
+      // Reset search when switching tabs
+      clearSearch();
+    }
+
+    // Attach click handlers to tab buttons
+    document.querySelectorAll('.tab-btn[data-tab]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        switchTab(this.getAttribute('data-tab'));
+      });
+    });
+
+
+    /* ============================================================
+       SEARCH / FILTER
+       Filters product cards in real time as user types.
+       Matches against data-name attribute on each .product-card.
+    ============================================================ */
+
+    const searchInput   = document.getElementById('product-search');
+    const searchClear   = document.getElementById('search-clear');
+    const noResultsAll  = document.getElementById('no-results-all');
+    const searchTermEl  = document.getElementById('search-term-display');
+
+    // Run filter every time user types
+    searchInput.addEventListener('input', function() {
+      const query = this.value.trim().toLowerCase();
+
+      // Show/hide the clear button
+      searchClear.style.display = query.length > 0 ? 'block' : 'none';
+
+      filterProducts(query);
+    });
+
+    // Clear button resets search
+    searchClear.addEventListener('click', clearSearch);
+
+    /**
+     * filterProducts(query)
+     * Shows only product cards whose data-name contains the query.
+     * If no results, shows the no-results message.
+     * @param {string} query — lowercase search string
+     */
+    function filterProducts(query) {
+
+      // Get all product cards currently visible in the active section
+      const activeSection = document.querySelector('.products-section:not([style*="display:none"])') ||
+                            document.getElementById('section-all-items');
+      const cards = activeSection.querySelectorAll('.product-card');
+
+      let visibleCount = 0;
+
+      cards.forEach(function(card) {
+        // Check if card's data-name contains the search query
+        const name = card.getAttribute('data-name') || '';
+        const matches = query === '' || name.includes(query);
+
+        card.style.display = matches ? '' : 'none';
+        if (matches) visibleCount++;
+      });
+
+      // Show/hide no-results message
+      const noResults = activeSection.querySelector('.no-results');
+      if (noResults) {
+        noResults.style.display = visibleCount === 0 && query !== '' ? 'flex' : 'none';
+        if (searchTermEl) searchTermEl.textContent = query;
+      }
+
+      // Update count display
+      const countEl = document.getElementById('items-count');
+      if (countEl) {
+        countEl.textContent = query ? visibleCount + ' result' + (visibleCount !== 1 ? 's' : '') : '';
+      }
+    }
+
+    /**
+     * clearSearch
+     * Resets search input and shows all products again.
+     */
+    function clearSearch() {
+      searchInput.value = '';
+      searchClear.style.display = 'none';
+      filterProducts('');
+    }
+
+
+    /* ============================================================
+       ORDER MODAL: OPEN / CLOSE
+    ============================================================ */
+
+    /**
+     * openOrderModal(btn)
+     * Opens the order modal for the clicked product.
+     * Fills in product name, price, and total into the modal UI.
+     * @param {HTMLElement} btn — the Buy Now button that was clicked
+     */
+    function openOrderModal(btn) {
+
+      const productName  = btn.getAttribute('data-product');
+      const productPrice = parseInt(btn.getAttribute('data-price'), 10);
+      const deliveryFee  = 75;
+      const total        = productPrice + deliveryFee;
+
+      // Store globally for WhatsApp message
+      currentProduct = { name: productName, price: productPrice };
+
+      // Fill hidden form fields
+      document.getElementById('order-product').value = productName;
+      document.getElementById('order-price').value   = productPrice;
+
+      // Fill visible modal info
+      document.getElementById('modal-product-name').textContent = productName;
+      document.getElementById('modal-item-price').textContent   = 'NPR ' + productPrice.toLocaleString();
+      document.getElementById('modal-total-price').textContent  = 'NPR ' + total.toLocaleString();
+
+      // Reset form and status
+      document.getElementById('order-form').reset();
+      document.getElementById('order-status').textContent = '';
+      document.getElementById('order-status').className  = 'order-status';
+
+      // Reset payment to COD (default)
+      selectPayment('cod');
+
+      // Show modal
+      document.getElementById('order-modal').style.display = 'flex';
+
+      // Prevent body scrolling while modal is open
+      document.body.style.overflow = 'hidden';
+    }
+
+    /**
+     * closeOrderModal
+     * Hides the order modal and restores page scroll.
+     */
+    function closeOrderModal() {
+      document.getElementById('order-modal').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    // Close modal when clicking the dark overlay behind it
+    document.getElementById('order-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeOrderModal();
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeOrderModal();
+    });
+
+
+    /* ============================================================
+       PAYMENT METHOD SELECTOR
+    ============================================================ */
+
+    /**
+     * selectPayment(method)
+     * Highlights the selected payment button.
+     * Only 'cod' is functional — eSewa and Khalti buttons are disabled in HTML.
+     * @param {string} method — 'cod'
+     */
+    function selectPayment(method) {
+      selectedPayment = method;
+
+      // Remove active from all payment buttons
+      document.querySelectorAll('.payment-btn').forEach(function(btn) {
+        btn.classList.remove('payment-btn-active');
+      });
+
+      // Add active to the matching button (only COD is clickable)
+      const activeBtn = document.getElementById('pay-' + method);
+      if (activeBtn) activeBtn.classList.add('payment-btn-active');
+    }
+
+
+    /* ============================================================
+       ORDER FORM: VALIDATION & SUBMIT
+    ============================================================ */
+
+    document.getElementById('order-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Validate all required fields
+      let valid = true;
+
+      // Name
+      const name = document.getElementById('order-name').value.trim();
+      document.getElementById('err-name').textContent =
+        !name ? 'Full name is required.' : '';
+      if (!name) valid = false;
+
+      // Email
+      const email    = document.getElementById('order-email').value.trim();
+      const emailOk  = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      document.getElementById('err-email').textContent =
+        !email ? 'Email is required.' : !emailOk ? 'Enter a valid email.' : '';
+      if (!email || !emailOk) valid = false;
+
+      // Phone
+      const phone = document.getElementById('order-phone').value.trim();
+      document.getElementById('err-phone').textContent =
+        !phone ? 'Contact number is required.' : '';
+      if (!phone) valid = false;
+
+      // Location
+      const location = document.getElementById('order-location').value.trim();
+      document.getElementById('err-location').textContent =
+        !location ? 'Delivery location is required.' : '';
+      if (!location) valid = false;
+
+      if (!valid) return;
+
+      // ── All valid: show success message ──
+      // In production: replace this block with a Formspree fetch() call
+      const statusEl = document.getElementById('order-status');
+      statusEl.textContent =
+        '✓ Order received! We will contact you on ' + phone + ' to confirm delivery.';
+      statusEl.className = 'order-status order-success';
+
+      // Auto-close modal after 3.5 seconds
+      setTimeout(closeOrderModal, 3500);
+    });
+
+
+    /* ============================================================
+       WHATSAPP ORDER
+       Pre-fills a WhatsApp message with order details
+       and opens the WhatsApp chat link.
+    ============================================================ */
+
+    /**
+     * openWhatsApp
+     * Validates the form first, then builds a WhatsApp message
+     * from the form fields and opens it in a new tab.
+     */
+    function openWhatsApp() {
+
+      const name     = document.getElementById('order-name').value.trim();
+      const phone    = document.getElementById('order-phone').value.trim();
+      const location = document.getElementById('order-location').value.trim();
+      const product  = document.getElementById('order-product').value;
+      const price    = document.getElementById('order-price').value;
+
+      // Basic check — name and phone at minimum
+      if (!name || !phone || !location) {
+        alert('Please fill in your Name, Contact Number, and Location before ordering via WhatsApp.');
+        return;
+      }
+
+      // Build the WhatsApp message text
+      const message =
+        'Hello! I would like to order from VibeGears.\n\n' +
+        'Product: ' + product + '\n' +
+        'Price: NPR ' + parseInt(price).toLocaleString() + '\n' +
+        'Delivery: NPR 75 (COD)\n' +
+        'Total: NPR ' + (parseInt(price) + 75).toLocaleString() + '\n\n' +
+        'Name: ' + name + '\n' +
+        'Phone: ' + phone + '\n' +
+        'Location: ' + location + '\n\n' +
+        'Payment: Cash on Delivery';
+
+      // Encode message for URL
+      const encodedMsg = encodeURIComponent(message);
+
+      // Replace with your actual WhatsApp number (no + or spaces)
+      const whatsappNumber = '9779808872779';
+
+      // Open WhatsApp chat in new tab
+      window.open('https://wa.me/' + whatsappNumber + '?text=' + encodedMsg, '_blank');
+    }
+
+
+    /* ============================================================
+       HEADER SCROLL EFFECT
+       Darkens store header when user scrolls down (matches main site)
+    ============================================================ */
+
+    window.addEventListener('scroll', function() {
+      const header = document.getElementById('store-header');
+      if (window.scrollY > 40) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+
+  </script>
+  <!-- END INLINE JAVASCRIPT -->
+
+</body>
+</html>

@@ -1,0 +1,2351 @@
+/*
+  ============================================================
+  THE VIBE BOXING CLUB — Main Stylesheet
+  File: styles.css
+  Aesthetic: Dark Industrial Boxing — raw, gritty, powerful
+  ============================================================
+  TABLE OF CONTENTS:
+    1.  CSS Custom Properties (Design Tokens)
+    2.  CSS Reset & Base Styles
+    3.  Background Image Placeholders
+    4.  Typography Utilities
+    5.  Overlay & Grain Texture
+    6.  Layout: Header
+    7.  Layout: Right Sidebar
+    8.  Layout: Main Content Area
+    9.  Section: Hero
+    10. Section: About
+    11. Section: Coaches
+    12. Content Panels (Sidebar panels)
+    13. Panel: Gym Time / Schedule
+    14. Panel: Plans (Boxing/Muay Thai/Kickboxing)
+    15. Panel: Personal Training
+    16. Panel: Location
+    17. Panel: Contact Form
+    18. Footer
+    19. Buttons
+    20. Animations & Keyframes
+    21. Responsive / Mobile
+  ============================================================
+*/
+
+
+/* ============================================================
+   1. CSS CUSTOM PROPERTIES (DESIGN TOKENS)
+   All colours, sizes, and timings defined here as variables.
+   Change a value here → it updates everywhere on the site.
+   ============================================================ */
+:root {
+
+  /* ── Colour Palette ── */
+  --clr-black:        #0a0a0a;    /* True near-black — page base */
+  --clr-dark:         #111111;    /* Slightly lighter dark for cards */
+  --clr-dark-mid:     #1a1a1a;    /* Mid-dark — sidebars, elevated surfaces */
+  --clr-dark-light:   #242424;    /* Lighter dark — table rows, inputs */
+  --clr-border:       #2e2e2e;    /* Subtle borders between elements */
+
+  --clr-red:          #c8102e;    /* Primary brand red — blood red boxing accent */
+  --clr-red-dim:      #8b0c1e;    /* Darker red — hover states, shadows */
+  --clr-red-glow:     rgba(200, 16, 46, 0.25); /* Red glow for neon effects */
+
+  --clr-white:        #f5f5f5;    /* Soft white — main text */
+  --clr-grey-light:   #a0a0a0;    /* Secondary text, labels */
+  --clr-grey-mid:     #666666;    /* Muted text, placeholders */
+
+  /* ── Typography ── */
+  --font-display:     'Oswald', sans-serif;   /* Headings, gym name */
+  --font-body:        'Barlow', sans-serif;    /* Body copy, labels */
+
+  /* ── Spacing Scale ── */
+  --space-xs:   4px;
+  --space-sm:   8px;
+  --space-md:   16px;
+  --space-lg:   24px;
+  --space-xl:   40px;
+  --space-xxl:  64px;
+
+  /* ── Layout Dimensions ── */
+  --header-height:    72px;       /* Fixed header height */
+  --sidebar-width:    260px;      /* Right sidebar width on desktop */
+
+  /* ── Animation Timings ── */
+  --ease-out:   cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in:    cubic-bezier(0.755, 0.05, 0.855, 0.06);
+  --duration-fast:   180ms;
+  --duration-mid:    350ms;
+  --duration-slow:   600ms;
+
+  /* ── Border Radius ── */
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  16px;
+}
+
+
+/* ============================================================
+   2. CSS RESET & BASE STYLES
+   Removes browser inconsistencies. Sets sensible defaults.
+   ============================================================ */
+
+/* Universal box-sizing — padding/border included in element width */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove default list styling globally */
+ul, ol {
+  list-style: none;
+}
+
+/* Make images responsive by default */
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* Remove default button/input styles */
+button, input, select, textarea {
+  font: inherit;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+/* Remove underlines from all links */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Set base font and background on the document root */
+html {
+  scroll-behavior: smooth;        /* Native smooth scrolling for anchor links */
+  font-size: 16px;                /* 1rem = 16px base */
+}
+
+body {
+  font-family:      var(--font-body);
+  background-color: var(--clr-black);
+  color:            var(--clr-white);
+  line-height:      1.6;
+  overflow-x:       hidden;       /* Prevent horizontal scroll on mobile */
+  min-height:       100vh;
+  position:         relative;
+}
+
+
+/* ============================================================
+   3. BACKGROUND IMAGE PLACEHOLDERS
+   ── HOW TO USE ──
+   Find the comment label (e.g. /* BG-HOME */)
+   Replace the url('') with your image path:
+     e.g.  url('images/hero-bg.jpg')
+   The overlay (--clr-black at ~70% opacity) auto-darkens it.
+   ============================================================ */
+
+/* ── BG-HOME ──
+   Hero / landing section full-screen background image.
+   Recommended: dramatic boxing action shot, wide/landscape format.
+   Ideal dimensions: 1920×1080px minimum
+*/
+.hero-section {
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(10,10,10,0.75) 0%,
+      rgba(10,10,10,0.55) 50%,
+      rgba(10,10,10,0.85) 100%
+    ),
+    url('hero-bg.jpg');  /* boxing gloves photo — Image 1 */
+  background-size: cover;
+  background-position: center;
+  background-attachment: scroll;   /* Parallax-style scroll effect */
+}
+
+/* ── BG-ABOUT ──
+   About section background — shown as a muted behind-text texture.
+   Recommended: gym interior wide shot, or training atmosphere photo.
+*/
+.about-section {
+  background-image:
+    linear-gradient(
+      135deg,
+      rgba(10,10,10,0.92) 0%,
+      rgba(10,10,10,0.80) 100%
+    ),
+    url('hero-bg.jpg');  /* ← REPLACE with: url('images/about-bg.jpg') */
+  background-size: cover;
+  background-position: center top;
+}
+
+/* ── BG-ABOUT-CARD ──
+   The right-side image card in the About section.
+   Recommended: close-up training shot, gloves, punching bag, etc.
+   Aspect ratio: roughly 4:5 (portrait)
+*/
+.about-img-inner {
+  background-image: url('preview.webp');  /* ← REPLACE with: url('images/about-card.jpg') */
+  background-size: cover;
+  background-position: center;
+}
+
+/* ── BG-COACHES ──
+   Coaches section — subtle dark texture or gym ambience.
+   Recommended: very dark, high-contrast shot or gym equipment.
+*/
+.coaches-section {
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(10,10,10,0.9) 0%,
+      rgba(10,10,10,0.85) 100%
+    ),
+    url('');  /* ← REPLACE with: url('images/coaches-bg.jpg') */
+  background-size: cover;
+  background-position: center;
+}
+
+/*
+  ── BG-COACH-1 / BG-COACH-2 / BG-COACH-3 ──
+  Individual coach photos are set via inline style in HTML:
+    style="--coach-bg: url('images/coach-raj.jpg') center/cover no-repeat #1a1a1a;"
+  The placeholder div is hidden once a real image is provided.
+  → Go to index.html, find each .coach-photo element and update the style attribute.
+*/
+
+
+/* ============================================================
+   4. TYPOGRAPHY UTILITIES
+   Reusable classes for headings, tags, and text styles.
+   ============================================================ */
+
+/* Section tag — small uppercase label above section titles */
+.section-tag {
+  display:         block;
+  font-family:     var(--font-body);
+  font-size:       0.7rem;
+  font-weight:     600;
+  letter-spacing:  0.3em;
+  text-transform:  uppercase;
+  color:           var(--clr-red);
+  margin-bottom:   var(--space-sm);
+}
+
+/* Section title — large heading using display font */
+.section-title {
+  font-family:     var(--font-display);
+  font-size:       clamp(2rem, 5vw, 3.5rem);   /* Scales with viewport */
+  font-weight:     700;
+  line-height:     1.05;
+  letter-spacing:  0.02em;
+  color:           var(--clr-white);
+  text-transform:  uppercase;
+}
+
+/* Accent span — makes part of a heading red */
+.accent {
+  color: var(--clr-red);
+}
+
+/* Section header block — wraps tag + title + decorative line */
+.section-header {
+  margin-bottom: var(--space-xl);
+  text-align:    left;
+}
+
+/* Decorative underline beneath section titles */
+.section-line {
+  width:            60px;
+  height:           3px;
+  background-color: var(--clr-red);
+  margin-top:       var(--space-md);
+}
+
+
+/* ============================================================
+   5. OVERLAY & GRAIN TEXTURE
+   These two layers sit on top of all background images
+   to unify the dark, gritty aesthetic.
+   ============================================================ */
+
+/* Site-wide overlay — darkens background images globally */
+.site-overlay {
+  position:         fixed;        /* Stays put during scroll */
+  inset:            0;            /* Covers entire viewport */
+  background:       rgba(5, 5, 5, 0.3);
+  pointer-events:   none;         /* Clicks pass through it */
+  z-index:          0;            /* Behind everything */
+}
+
+/* Grain/noise texture — subtle visual grit */
+.grain-overlay {
+  position:         fixed;
+  inset:            0;
+  pointer-events:   none;
+  z-index:          1;
+  opacity:          0.03;
+  /* SVG-based noise filter applied via CSS background */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size:  200px 200px;
+}
+
+
+/* ============================================================
+   6. LAYOUT: HEADER
+   Fixed top bar. Always visible during scroll.
+   ============================================================ */
+
+.site-header {
+  position:         fixed;
+  top:              0;
+  left:             0;
+  right:            0;
+  height:           var(--header-height);
+  z-index:          1000;         /* Above all other content */
+  display:          flex;
+  align-items:      center;
+  gap:              var(--space-xl);
+  padding:          0 var(--space-xl);
+
+  /* Blurred glass background — darkens on scroll via JS class .scrolled */
+  background:       rgba(10, 10, 10, 0.85);
+  backdrop-filter:  blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  /* Bottom border — red accent line */
+  border-bottom:    1px solid rgba(200, 16, 46, 0.25);
+
+  /* Smooth background transition when scrolled */
+  transition: background var(--duration-mid) var(--ease-out),
+              box-shadow var(--duration-mid) var(--ease-out);
+}
+
+/* Darker header when user scrolls down — added by JS */
+.site-header.scrolled {
+  background:   rgba(5, 5, 5, 0.98);
+  box-shadow:   0 4px 30px rgba(0, 0, 0, 0.6);
+  border-bottom-color: var(--clr-red);
+}
+
+/* ── Logo Block ── */
+.header-logo {
+  display:        flex;
+  flex-direction: column;
+  line-height:    1;
+  flex-shrink:    0;              /* Don't let it shrink on small screens */
+}
+
+/* Small text above the gym name */
+.logo-tag {
+  font-family:    var(--font-body);
+  font-size:      0.6rem;
+  letter-spacing: 0.35em;
+  color:          var(--clr-red);
+  text-transform: uppercase;
+  font-weight:    600;
+}
+
+/* Main gym name link */
+.logo-name {
+  font-family:    var(--font-display);
+  font-size:      1.3rem;
+  font-weight:    700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color:          var(--clr-white);
+  transition:     color var(--duration-fast);
+}
+
+.logo-name:hover {
+  color: var(--clr-red);
+}
+
+/* The word BOXING is highlighted red in the logo */
+.logo-accent {
+  color: var(--clr-red);
+}
+
+/* ── Header Navigation ── */
+.header-nav {
+  flex: 1;                        /* Takes remaining horizontal space */
+}
+
+.header-nav-list {
+  display:        flex;
+  gap:            var(--space-xl);
+  align-items:    center;
+}
+
+/* Individual nav link */
+.nav-link {
+  font-family:    var(--font-display);
+  font-size:      0.95rem;
+  font-weight:    600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color:          var(--clr-grey-light);
+  position:       relative;
+  padding-bottom: 4px;
+  transition:     color var(--duration-fast);
+}
+
+/* Animated underline on hover — grows from left */
+.nav-link::after {
+  content:          '';
+  position:         absolute;
+  bottom:           0;
+  left:             0;
+  width:            0;
+  height:           2px;
+  background-color: var(--clr-red);
+  transition:       width var(--duration-mid) var(--ease-out);
+}
+
+.nav-link:hover {
+  color: var(--clr-white);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+.nav-link.active {
+  color: var(--clr-white);
+}
+
+/* ── Social Media Links ── */
+.header-social {
+  display:        flex;
+  align-items:    center;
+  gap:            var(--space-md);
+  flex-shrink:    0;
+}
+
+/* Individual social icon link */
+.social-link {
+  display:        flex;
+  align-items:    center;
+  gap:            6px;
+  color:          var(--clr-grey-mid);
+  font-size:      0.9rem;
+  transition:     color var(--duration-fast), transform var(--duration-fast);
+}
+
+.social-link:hover {
+  color:      var(--clr-red);
+  transform:  translateY(-2px);
+}
+
+/* "@ handle" label shown only next to Instagram */
+.social-label {
+  font-family:    var(--font-body);
+  font-size:      0.7rem;
+  font-weight:    500;
+  letter-spacing: 0.05em;
+}
+
+/* ── Hamburger (mobile menu button) ── */
+.hamburger {
+  display:        none;           /* Hidden on desktop, shown via media query */
+  flex-direction: column;
+  gap:            5px;
+  cursor:         pointer;
+  padding:        var(--space-sm);
+  margin-left:    auto;
+}
+
+/* Each line of the hamburger icon */
+.ham-line {
+  display:          block;
+  width:            24px;
+  height:           2px;
+  background-color: var(--clr-white);
+  border-radius:    2px;
+  transition:       transform var(--duration-mid) var(--ease-out),
+                    opacity   var(--duration-mid) var(--ease-out);
+  transform-origin: center;
+}
+
+/* When hamburger is open, animate lines into an X */
+.hamburger.open .ham-line:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.hamburger.open .ham-line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.hamburger.open .ham-line:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+
+/* ============================================================
+   7. LAYOUT: RIGHT SIDEBAR
+   Fixed navigation panel on the right side of the viewport.
+   On mobile: full-height slide-in overlay from the right.
+   ============================================================ */
+
+.right-sidebar {
+  position:       fixed;
+  top:            var(--header-height);    /* Starts below header */
+  right:          0;
+  bottom:         0;
+  width:          var(--sidebar-width);
+  z-index:        900;
+
+  background:     var(--clr-dark-mid);
+  border-left:    1px solid var(--clr-border);
+
+  display:        flex;
+  flex-direction: column;
+  padding:        var(--space-xl) 0 var(--space-xl) 0;
+  overflow-y:     auto;           /* Scroll if content taller than viewport */
+
+  /* Custom scrollbar styling */
+  scrollbar-width: thin;
+  scrollbar-color: var(--clr-red) var(--clr-dark);
+
+  /* Slide-in transition for mobile */
+  transition: transform var(--duration-mid) var(--ease-out);
+}
+
+/* On mobile, sidebar slides off screen to the right */
+@media (max-width: 900px) {
+  .right-sidebar {
+    transform: translateX(100%);  /* Hidden by default on mobile */
+    box-shadow: -8px 0 40px rgba(0,0,0,0.8);
+  }
+
+  /* JS adds .sidebar-open class to body to reveal the sidebar */
+  body.sidebar-open .right-sidebar {
+    transform: translateX(0);
+  }
+}
+
+/* ── "NAVIGATE" label at top of sidebar ── */
+.sidebar-label {
+  font-family:    var(--font-display);
+  font-size:      0.6rem;
+  letter-spacing: 0.4em;
+  color:          var(--clr-grey-mid);
+  text-transform: uppercase;
+  padding:        0 var(--space-lg) var(--space-lg);
+  border-bottom:  1px solid var(--clr-border);
+  margin-bottom:  var(--space-sm);
+}
+
+/* ── Sidebar Nav List ── */
+.sidebar-nav-list {
+  display:        flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Individual sidebar link */
+.sidebar-link {
+  display:        flex;
+  align-items:    center;
+  gap:            var(--space-md);
+  padding:        14px var(--space-lg);
+  color:          var(--clr-grey-light);
+  font-family:    var(--font-body);
+  font-size:      0.85rem;
+  font-weight:    500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor:         pointer;
+  border-left:    3px solid transparent;   /* Accent line on active */
+
+  transition:     color       var(--duration-fast),
+                  background  var(--duration-fast),
+                  border-color var(--duration-fast),
+                  transform   var(--duration-fast);
+}
+
+.sidebar-link:hover {
+  color:            var(--clr-white);
+  background-color: rgba(200, 16, 46, 0.08);
+  border-left-color: var(--clr-red);
+  transform:        translateX(4px);  /* Subtle slide right on hover */
+}
+
+/* Active state — when this panel is open */
+.sidebar-link.active {
+  color:            var(--clr-white);
+  background-color: rgba(200, 16, 46, 0.15);
+  border-left-color: var(--clr-red);
+}
+
+/* ── Icon inside sidebar link ── */
+.sidebar-icon {
+  width:            20px;
+  text-align:       center;
+  color:            var(--clr-red);
+  opacity:          0.8;
+  flex-shrink:      0;
+}
+
+/* ── Arrow → at end of link ── */
+.sidebar-arrow {
+  margin-left:  auto;
+  opacity:      0;
+  transition:   opacity var(--duration-fast),
+                transform var(--duration-fast);
+}
+
+.sidebar-link:hover .sidebar-arrow {
+  opacity:    1;
+  transform:  translateX(3px);
+}
+
+/* ── Contact CTA item — styled differently at bottom ── */
+.sidebar-cta-item {
+  margin-top: auto;             /* Pushes to bottom of sidebar */
+  padding:    var(--space-md) var(--space-md) 0;
+}
+
+.sidebar-cta {
+  background:     var(--clr-red);
+  color:          var(--clr-white) !important;
+  border-radius:  var(--radius-sm);
+  border-left:    none !important;
+  justify-content: center;
+  font-weight:    600;
+  transform:      none !important;
+}
+
+.sidebar-cta:hover {
+  background: var(--clr-red-dim) !important;
+  border-left: none !important;
+  transform: none !important;
+}
+
+/* ── Decorative watermark text in sidebar ── */
+.sidebar-watermark {
+  font-family:    var(--font-display);
+  font-size:      5rem;
+  font-weight:    700;
+  color:          rgba(255,255,255, 0.02);
+  text-align:     center;
+  letter-spacing: 0.1em;
+  position:       absolute;
+  bottom:         var(--space-xl);
+  right:          0;
+  left:           0;
+  pointer-events: none;           /* Doesn't block clicks */
+  user-select:    none;
+}
+
+
+/* ============================================================
+   8. LAYOUT: MAIN CONTENT AREA
+   Offset to the right to make room for the fixed sidebar.
+   Padded from top to clear the fixed header.
+   ============================================================ */
+
+.main-content {
+  margin-top:   var(--header-height);     /* Clear fixed header */
+  margin-right: var(--sidebar-width);     /* Clear fixed sidebar */
+  min-height:   calc(100vh - var(--header-height));
+  position:     relative;
+  z-index:      2;                        /* Above overlay layers */
+}
+
+/* On mobile, no right offset — sidebar is overlay */
+@media (max-width: 900px) {
+  .main-content {
+    margin-right: 0;
+  }
+}
+@media (max-width: 900px) {
+  .hero-section {
+    background-attachment: scroll;  /* mobile fix */
+  }
+}
+/* Base section styles — shared by all sections */
+.section {
+  padding:    var(--space-xxl) var(--space-xl);
+  position:   relative;
+}
+
+
+/* ============================================================
+   9. SECTION: HERO
+   Full-screen dramatic opening section.
+   ============================================================ */
+
+.hero-section {
+  background-image: linear-gradient(
+      135deg,
+      rgba(10,10,10,0.92) 0%,
+      rgba(10,10,10,0.80) 100%
+    ),url('vibes.jpg');
+  min-height:       calc(100vh - var(--header-height));
+  display:          flex;
+  flex-direction:   column;
+  justify-content:  center;
+  position:         relative;
+  background-repeat: no-repeat;
+  padding:          var(--space-xxl) var(--space-xl) var(--space-xl);
+  overflow:         hidden;
+}
+
+/* ── Diagonal accent bar ── decorative angled red bar behind content */
+.hero-accent-bar {
+  position:         absolute;
+  top:              0;
+  left:             0;
+  width:            6px;
+  height:           100%;
+  background:       linear-gradient(to bottom, var(--clr-red), transparent);
+}
+
+/* ── Hero content block ── */
+.hero-content {
+  max-width:    680px;
+  /* Animate in on page load */
+  animation:    fadeSlideUp var(--duration-slow) var(--ease-out) both;
+}
+
+/* Small tag above headline */
+.hero-tag {
+  font-family:    var(--font-body);
+  font-size:      0.75rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color:          var(--clr-red);
+  font-weight:    600;
+  margin-bottom:  var(--space-md);
+  display:        flex;
+  align-items:    center;
+  gap:            var(--space-sm);
+}
+
+/* Decorative line before the tag text */
+.hero-tag::before {
+  content:          '';
+  display:          inline-block;
+  width:            40px;
+  height:           1px;
+  background-color: var(--clr-red);
+}
+
+/* ── Main headline ── */
+.hero-headline {
+  font-family:    var(--font-display);
+  font-weight:    700;
+  line-height:    0.95;
+  text-transform: uppercase;
+  margin-bottom:  var(--space-lg);
+  display:        flex;
+  flex-direction: column;
+}
+
+/* Each word on its own line */
+.headline-line {
+  font-size:      clamp(4rem, 10vw, 8rem);
+  letter-spacing: -0.02em;
+  display:        block;
+  /* Staggered animation per line */
+  animation:      fadeSlideUp var(--duration-slow) var(--ease-out) both;
+}
+
+.headline-line:nth-child(1) { animation-delay: 0.1s; }
+.headline-line:nth-child(2) { animation-delay: 0.2s; }
+.headline-line:nth-child(3) { animation-delay: 0.3s; }
+
+/* "FIGHT." line — red with outline effect */
+.accent-line {
+  color:          var(--clr-red);
+  -webkit-text-stroke: 2px var(--clr-red);
+}
+
+/* Hero description paragraph */
+.hero-desc {
+  font-size:      1rem;
+  color:          var(--clr-white);
+  max-width:      480px;
+  margin-bottom:  var(--space-xl);
+  line-height:    1.7;
+  animation:      fadeSlideUp var(--duration-slow) var(--ease-out) 0.4s both;
+}
+
+/* ── CTA Button Group ── */
+.hero-cta-group {
+  display:    flex;
+  gap:        var(--space-md);
+  flex-wrap:  wrap;
+  animation:  fadeSlideUp var(--duration-slow) var(--ease-out) 0.5s both;
+}
+
+/* ── Stats bar — numbers row at bottom of hero ── */
+.hero-stats {
+  display:          flex;
+  align-items:      center;
+  gap:              var(--space-xl);
+  margin-top:       var(--space-xxl);
+  padding-top:      var(--space-xl);
+  border-top:       1px solid var(--clr-border);
+  animation:        fadeSlideUp var(--duration-slow) var(--ease-out) 0.6s both;
+}
+
+.stat-item {
+  display:        flex;
+  flex-direction: column;
+  gap:            2px;
+}
+
+.stat-number {
+  font-family:    var(--font-display);
+  font-size:      2rem;
+  font-weight:    700;
+  color:          var(--clr-white);
+  letter-spacing: -0.02em;
+}
+
+.stat-label {
+  font-size:      0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color:          var(--clr-grey-mid);
+}
+
+/* Thin vertical divider between stats */
+.stat-divider {
+  width:      1px;
+  height:     40px;
+  background: var(--clr-border);
+}
+
+
+/* ============================================================
+   10. SECTION: ABOUT
+   ============================================================ */
+
+.about-section {
+  padding: var(--space-xxl) var(--space-xl);
+}
+
+/* Two-column grid: text left, image right */
+.about-grid {
+  display:                grid;
+  grid-template-columns:  1fr 1fr;
+  gap:                    var(--space-xxl);
+  align-items:            center;
+}
+
+/* Body text paragraphs */
+.about-para {
+  font-size:      1rem;
+  color:          var(--clr-grey-light);
+  line-height:    1.8;
+  margin-bottom:  var(--space-lg);
+}
+
+.about-para strong {
+  color:          var(--clr-white);
+}
+
+/* Gym values list */
+.about-values {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-sm);
+  margin-top:     var(--space-lg);
+}
+
+.about-values li {
+  display:        flex;
+  align-items:    center;
+  gap:            var(--space-sm);
+  font-size:      0.9rem;
+  color:          var(--clr-grey-light);
+  font-weight:    500;
+}
+
+.about-values li i {
+  color:          var(--clr-red);
+  font-size:      0.8rem;
+}
+
+/* ── About image card (right column) ── */
+.about-image-card {
+  position:       relative;
+  aspect-ratio:   4/5;
+  max-height:     520px;
+}
+
+.about-img-inner {
+  width:          100%;
+  height:         100%;
+  border-radius:  var(--radius-md);
+  background-color: var(--clr-dark-light);
+  position:       relative;
+  overflow:       hidden;
+}
+
+/* Placeholder overlay shown until real image is added */
+.img-placeholder-label {
+  position:       absolute;
+  inset:          0;
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  justify-content: center;
+  gap:            var(--space-sm);
+  color:          var(--clr-grey-mid);
+  font-size:      0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  /* border:         2px dashed var(--clr-border); */
+  border-radius:  var(--radius-md);
+}
+
+.img-placeholder-label i {
+  font-size:      2rem;
+  color:          var(--clr-border);
+}
+
+/* Decorative red corner accent on the image card */
+.about-card-corner {
+  position:       absolute;
+  bottom:         -10px;
+  right:          -10px;
+  width:          60px;
+  height:         60px;
+  border-right:   3px solid var(--clr-red);
+  border-bottom:  3px solid var(--clr-red);
+  border-radius:  0 0 var(--radius-sm) 0;
+  pointer-events: none;
+}
+
+/* Responsive: stack on smaller screens */
+@media (max-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-image-card {
+    aspect-ratio: 16/9;
+    max-height: 280px;
+  }
+}
+
+
+/* ============================================================
+   11. SECTION: COACHES
+   ============================================================ */
+
+.coaches-section {
+  padding: var(--space-xxl) var(--space-xl);
+}
+
+/* Three-column grid of coach cards */
+.coaches-grid {
+  display:                grid;
+  grid-template-columns:  repeat(auto-fit, minmax(260px, 1fr));
+  gap:                    var(--space-lg);
+}
+
+/* ── Individual Coach Card ── */
+.coach-card {
+  background:     var(--clr-dark);
+  border:         1px solid var(--clr-border);
+  border-radius:  var(--radius-md);
+  overflow:       hidden;
+  transition:     transform var(--duration-mid) var(--ease-out),
+                  box-shadow var(--duration-mid) var(--ease-out),
+                  border-color var(--duration-mid);
+}
+
+.coach-card:hover {
+  transform:    translateY(-6px);
+  box-shadow:   0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px var(--clr-red);
+  border-color: var(--clr-red);
+}
+
+/* ── Coach photo area ── */
+.coach-photo {
+  position:         relative;
+  aspect-ratio:     4/3;
+  background:       var(--coach-bg, var(--clr-dark-light));
+  overflow:         hidden;
+}
+
+/* Placeholder icon — hidden once a real background image is added */
+.coach-photo-placeholder {
+  position:       absolute;
+  inset:          0;
+  display:        flex;
+  align-items:    center;
+  justify-content: center;
+  font-size:      3rem;
+  color:          var(--clr-border);
+}
+
+/* Discipline badge on the photo */
+.coach-badge {
+  position:         absolute;
+  bottom:           var(--space-sm);
+  left:             var(--space-sm);
+  background-color: var(--clr-red);
+  color:            var(--clr-white);
+  font-family:      var(--font-display);
+  font-size:        0.65rem;
+  font-weight:      600;
+  letter-spacing:   0.2em;
+  text-transform:   uppercase;
+  padding:          4px 10px;
+  border-radius:    var(--radius-sm);
+}
+
+/* ── Coach info block below photo ── */
+.coach-info {
+  padding: var(--space-lg);
+}
+
+.coach-name {
+  font-family:    var(--font-display);
+  font-size:      1.2rem;
+  font-weight:    700;
+  color:          var(--clr-white);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin-bottom:  4px;
+}
+
+.coach-title {
+  font-size:      0.75rem;
+  color:          var(--clr-red);
+  font-weight:    600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom:  var(--space-md);
+}
+
+.coach-bio {
+  font-size:      0.85rem;
+  color:          var(--clr-grey-light);
+  line-height:    1.65;
+  margin-bottom:  var(--space-md);
+}
+
+/* Coach's social icon links */
+.coach-social a {
+  color:      var(--clr-grey-mid);
+  font-size:  1rem;
+  transition: color var(--duration-fast);
+}
+
+.coach-social a:hover {
+  color: var(--clr-red);
+}
+
+
+/* ============================================================
+   12. CONTENT PANELS WRAPPER & PANEL BASE STYLES
+   All sidebar panels sit in this wrapper.
+   Only one panel is visible at a time — controlled by JS.
+   ============================================================ */
+
+/* Wrapper contains all hidden panels */
+.content-panels-wrapper {
+  position: relative;
+}
+
+/* Each panel: hidden by default */
+.content-panel {
+  display:          none;         /* JS adds .panel-active to show */
+  padding:          var(--space-xxl) var(--space-xl);
+  min-height:       100vh;
+  background:       var(--clr-black);
+  border-top:       1px solid var(--clr-border);
+
+  /* Animate in when shown */
+  animation:        fadeSlideUp var(--duration-mid) var(--ease-out) both;
+}
+
+/* JS toggles this class to show a panel */
+.content-panel.panel-active {
+  display: block;
+}
+
+/* ── Panel Header (shared across all panels) ── */
+.panel-header {
+  position:         relative;
+  margin-bottom:    var(--space-xl);
+}
+
+/* Close button — top right of panel */
+.panel-close {
+  position:         absolute;
+  top:              0;
+  right:            0;
+  width:            36px;
+  height:           36px;
+  border-radius:    50%;
+  background:       var(--clr-dark-light);
+  color:            var(--clr-grey-light);
+  font-size:        0.9rem;
+  cursor:           pointer;
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
+  border:           1px solid var(--clr-border);
+  transition:       background var(--duration-fast), color var(--duration-fast);
+}
+
+.panel-close:hover {
+  background: var(--clr-red);
+  color:      var(--clr-white);
+}
+
+/* Intro paragraph beneath panel title */
+.panel-intro {
+  font-size:      1rem;
+  color:          var(--clr-grey-light);
+  max-width:      600px;
+  line-height:    1.7;
+  margin-bottom:  var(--space-xl);
+}
+
+
+/* ============================================================
+   13. PANEL: GYM TIME / SCHEDULE
+   ============================================================ */
+
+/* ── Operating hours table ── */
+.schedule-table {
+  max-width:      480px;
+  margin-bottom:  var(--space-xxl);
+}
+
+/* Each day row */
+.schedule-row {
+  display:          flex;
+  justify-content:  space-between;
+  align-items:      center;
+  padding:          var(--space-md) 0;
+  border-bottom:    1px solid var(--clr-border);
+  font-size:        0.9rem;
+}
+
+.schedule-day {
+  color:      var(--clr-grey-light);
+  font-weight: 500;
+}
+
+.schedule-time {
+  font-family:  var(--font-display);
+  font-weight:  600;
+  color:        var(--clr-white);
+  letter-spacing: 0.05em;
+}
+
+/* Holiday row — de-emphasised */
+.holiday-row .schedule-time {
+  color: var(--clr-grey-mid);
+}
+
+/* ── Weekly class timetable grid ── */
+.timetable-title {
+  font-family:    var(--font-display);
+  font-size:      1.2rem;
+  font-weight:    700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom:  var(--space-lg);
+  color:          var(--clr-white);
+}
+
+.timetable-grid {
+  display:                grid;
+  grid-template-columns:  repeat(auto-fit, minmax(200px, 1fr));
+  gap:                    var(--space-md);
+}
+
+/* Each class tile */
+.timetable-card {
+  background:     var(--clr-dark);
+  border:         1px solid var(--clr-border);
+  border-radius:  var(--radius-md);
+  padding:        var(--space-lg);
+  border-left:    3px solid var(--clr-red);
+  transition:     transform var(--duration-fast), box-shadow var(--duration-fast);
+}
+
+.timetable-card:hover {
+  transform:  translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+.timetable-day {
+  font-family:    var(--font-body);
+  font-size:      0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color:          var(--clr-red);
+  font-weight:    600;
+  margin-bottom:  var(--space-sm);
+}
+
+.timetable-class {
+  font-family:    var(--font-display);
+  font-size:      1rem;
+  font-weight:    700;
+  color:          var(--clr-white);
+  text-transform: uppercase;
+  margin-bottom:  4px;
+}
+
+.timetable-time {
+  font-size:  0.8rem;
+  color:      var(--clr-grey-mid);
+}
+
+
+/* ============================================================
+   14. PANEL: PLANS (Boxing / Muay Thai / Kickboxing)
+   ============================================================ */
+
+/* Three-column plans grid — auto-fit handles 2 or 4 cards gracefully */
+.plans-grid {
+  display:                grid;
+  grid-template-columns:  repeat(auto-fit, minmax(220px, 1fr));
+  gap:                    var(--space-lg);
+}
+
+/* Small age/eligibility note below the plan badge */
+.plan-age-note {
+  font-size:      0.75rem;
+  color:          var(--clr-grey-mid);
+  font-style:     italic;
+  margin-top:     -8px;           /* Pull up close to badge */
+  margin-bottom:  4px;
+}
+
+/* ── Individual Plan Card ── */
+.plan-card {
+  background:     var(--clr-dark);
+  border:         1px solid var(--clr-border);
+  border-radius:  var(--radius-md);
+  padding:        var(--space-xl);
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-md);
+  position:       relative;
+  transition:     border-color var(--duration-mid),
+                  transform    var(--duration-mid) var(--ease-out);
+}
+
+.plan-card:hover {
+  border-color:   var(--clr-red);
+  transform:      translateY(-4px);
+}
+
+/* Highlighted / featured plan */
+.plan-featured {
+  border-color:   var(--clr-red);
+  background:     linear-gradient(160deg, rgba(200,16,46,0.08) 0%, var(--clr-dark) 60%);
+}
+
+/* "Most Popular" ribbon tag */
+.plan-popular-tag {
+  position:       absolute;
+  top:            -1px;
+  right:          var(--space-lg);
+  background:     var(--clr-red);
+  color:          var(--clr-white);
+  font-size:      0.6rem;
+  font-weight:    700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding:        4px 10px;
+  border-radius:  0 0 var(--radius-sm) var(--radius-sm);
+}
+
+/* Plan tier name badge */
+.plan-badge {
+  font-family:    var(--font-display);
+  font-size:      0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color:          var(--clr-red);
+  font-weight:    600;
+}
+
+/* Price display */
+.plan-price {
+  display:        flex;
+  align-items:    baseline;
+  gap:            4px;
+  line-height:    1;
+}
+
+.price-currency {
+  font-family:    var(--font-body);
+  font-size:      0.85rem;
+  color:          var(--clr-grey-mid);
+  font-weight:    500;
+  margin-top:     4px;
+}
+
+.price-amount {
+  font-family:    var(--font-display);
+  font-size:      2.5rem;
+  font-weight:    700;
+  color:          var(--clr-white);
+}
+
+.price-period {
+  font-size:      0.8rem;
+  color:          var(--clr-grey-mid);
+}
+
+/* Features list inside a plan */
+.plan-features {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-sm);
+  flex: 1;
+}
+
+.plan-features li {
+  display:        flex;
+  align-items:    center;
+  gap:            var(--space-sm);
+  font-size:      0.85rem;
+  color:          var(--clr-grey-light);
+}
+
+/* Checkmark icon */
+.plan-features li i.fa-check {
+  color:      var(--clr-red);
+  font-size:  0.75rem;
+}
+
+/* Disabled/unavailable feature — crossed out */
+.plan-features li.disabled {
+  opacity: 0.4;
+}
+
+.plan-features li.disabled i.fa-times {
+  color:      var(--clr-grey-mid);
+  font-size:  0.75rem;
+}
+
+/* ── Discipline Highlights (used in Muay Thai & Kickboxing panels) ── */
+.discipline-highlights {
+  display:                grid;
+  grid-template-columns:  repeat(auto-fit, minmax(200px, 1fr));
+  gap:                    var(--space-lg);
+  margin-bottom:          var(--space-xxl);
+}
+
+.highlight-item {
+  background:     var(--clr-dark);
+  border:         1px solid var(--clr-border);
+  border-radius:  var(--radius-md);
+  padding:        var(--space-lg);
+  text-align:     center;
+  transition:     border-color var(--duration-fast);
+}
+
+.highlight-item:hover {
+  border-color: var(--clr-red);
+}
+
+.highlight-item i {
+  font-size:      1.8rem;
+  color:          var(--clr-red);
+  margin-bottom:  var(--space-sm);
+  display:        block;
+}
+
+.highlight-item h4 {
+  font-family:    var(--font-display);
+  font-size:      0.95rem;
+  font-weight:    700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color:          var(--clr-white);
+  margin-bottom:  var(--space-sm);
+}
+
+.highlight-item p {
+  font-size:  0.8rem;
+  color:      var(--clr-grey-mid);
+  line-height: 1.5;
+}
+
+
+/* ============================================================
+   15. PANEL: PERSONAL TRAINING
+   ============================================================ */
+
+/* PT package cards row */
+.pt-packages {
+  display:                grid;
+  grid-template-columns:  repeat(auto-fit, minmax(220px, 1fr));
+  gap:                    var(--space-lg);
+  margin-bottom:          var(--space-xxl);
+}
+
+/* Individual PT card */
+.pt-card {
+  background:     var(--clr-dark);
+  border:         1px solid var(--clr-border);
+  border-radius:  var(--radius-md);
+  padding:        var(--space-xl);
+  text-align:     center;
+  transition:     border-color var(--duration-mid),
+                  transform    var(--duration-mid) var(--ease-out);
+}
+
+.pt-card:hover {
+  border-color:   var(--clr-red);
+  transform:      translateY(-4px);
+}
+
+/* Featured PT card */
+.pt-card-featured {
+  border-color:   var(--clr-red);
+  background:     linear-gradient(160deg, rgba(200,16,46,0.1) 0%, var(--clr-dark) 70%);
+}
+
+.pt-icon {
+  font-size:      2rem;
+  color:          var(--clr-red);
+  margin-bottom:  var(--space-md);
+}
+
+.pt-card h3 {
+  font-family:    var(--font-display);
+  font-size:      1.1rem;
+  font-weight:    700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color:          var(--clr-white);
+  margin-bottom:  var(--space-sm);
+}
+
+.pt-price {
+  font-family:    var(--font-display);
+  font-size:      1.4rem;
+  font-weight:    700;
+  color:          var(--clr-white);
+  margin-bottom:  var(--space-sm);
+}
+
+.pt-price span {
+  font-size:      0.8rem;
+  color:          var(--clr-grey-mid);
+  font-family:    var(--font-body);
+  font-weight:    400;
+}
+
+.pt-card p {
+  font-size:  0.85rem;
+  color:      var(--clr-grey-mid);
+  line-height: 1.5;
+}
+
+/* Booking CTA block */
+.pt-cta-block {
+  text-align:   center;
+  padding:      var(--space-xl);
+  background:   var(--clr-dark);
+  border-radius: var(--radius-md);
+  border:       1px solid var(--clr-border);
+}
+
+.pt-cta-block p {
+  font-size:      1rem;
+  color:          var(--clr-grey-light);
+  margin-bottom:  var(--space-lg);
+}
+
+
+/* ============================================================
+   16. PANEL: LOCATION
+   ============================================================ */
+
+/* Three-column info cards */
+.location-info-grid {
+  display:                grid;
+  grid-template-columns:  repeat(auto-fit, minmax(200px, 1fr));
+  gap:                    var(--space-lg);
+  margin-bottom:          var(--space-xl);
+}
+
+.location-card {
+  background:     var(--clr-dark);
+  border:         1px solid var(--clr-border);
+  border-radius:  var(--radius-md);
+  padding:        var(--space-xl);
+  text-align:     center;
+}
+
+.location-card i {
+  font-size:      1.5rem;
+  color:          var(--clr-red);
+  margin-bottom:  var(--space-sm);
+  display:        block;
+}
+
+.location-card h4 {
+  font-family:    var(--font-display);
+  font-size:      0.85rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color:          var(--clr-white);
+  margin-bottom:  var(--space-sm);
+}
+
+.location-card p {
+  font-size:  0.85rem;
+  color:      var(--clr-grey-light);
+  line-height: 1.6;
+}
+
+/* ── Map wrapper ── */
+.map-wrapper {
+  border-radius:  var(--radius-md);
+  overflow:       hidden;
+  margin-bottom:  var(--space-lg);
+}
+
+/* Placeholder shown until real map embed is added */
+.map-placeholder {
+  background:     var(--clr-dark);
+  border:         2px dashed var(--clr-border);
+  border-radius:  var(--radius-md);
+  height:         280px;
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  justify-content: center;
+  gap:            var(--space-md);
+  color:          var(--clr-grey-mid);
+  text-align:     center;
+}
+
+.map-placeholder i {
+  font-size:  3rem;
+  color:      var(--clr-border);
+}
+
+.map-placeholder p {
+  font-size:  0.85rem;
+  line-height: 1.5;
+}
+
+.map-placeholder code {
+  background:     rgba(255,255,255,0.05);
+  padding:        2px 8px;
+  border-radius:  var(--radius-sm);
+  font-size:      0.75rem;
+  color:          var(--clr-red);
+}
+
+/* Note below the map */
+.directions-note {
+  font-size:  0.85rem;
+  color:      var(--clr-grey-mid);
+  display:    flex;
+  gap:        var(--space-sm);
+  align-items: flex-start;
+  margin-bottom: var(--space-md);
+}
+
+.directions-note i {
+  color:      var(--clr-red);
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+/* ── "Gym Closed" label on public holiday row ── */
+.closed-label {
+  color:          #ff4d4d;
+  font-family:    var(--font-display);
+  font-weight:    600;
+  letter-spacing: 0.08em;
+}
+
+/* ── Always-open timetable card spans full row width ── */
+.timetable-always-open {
+  grid-column:  1 / -1;
+  border-color: rgba(200, 16, 46, 0.5);
+  background:   rgba(200, 16, 46, 0.06);
+}
+
+/* ── Clickable phone / email inside location cards ── */
+.contact-action-link {
+  color:       var(--clr-white);
+  font-weight: 600;
+  font-size:   1rem;
+  transition:  color var(--duration-fast);
+  display:     inline-block;
+}
+
+.contact-action-link:hover {
+  color: var(--clr-red);
+}
+
+/* ── Branch block — wraps one location's full info + map ── */
+.branch-block {
+  background:    var(--clr-dark);
+  border:        1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  padding:       var(--space-xl);
+  margin-bottom: var(--space-xl);
+}
+
+/* Branch heading row: tag pill + branch name */
+.branch-heading {
+  display:     flex;
+  align-items: center;
+  gap:         var(--space-md);
+  margin-bottom: var(--space-md);
+  flex-wrap:   wrap;
+}
+
+/* "Main Branch" / "MMA Branch" pill badge */
+.branch-tag {
+  display:        inline-block;
+  background:     var(--clr-red);
+  color:          var(--clr-white);
+  font-family:    var(--font-body);
+  font-size:      0.65rem;
+  font-weight:    700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding:        4px 12px;
+  border-radius:  var(--radius-sm);
+}
+
+/* Second branch tag — different colour to distinguish branches */
+.branch-tag-alt {
+  background: #1a3a5c;
+}
+
+.branch-name {
+  font-family:    var(--font-display);
+  font-size:      1.3rem;
+  font-weight:    700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color:          var(--clr-white);
+}
+
+/* Address line with map-pin icon */
+.branch-address {
+  display:       flex;
+  align-items:   flex-start;
+  gap:           var(--space-sm);
+  font-size:     0.9rem;
+  color:         var(--clr-grey-light);
+  margin-bottom: var(--space-md);
+  line-height:   1.6;
+}
+
+.branch-address i {
+  color:      var(--clr-red);
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+/* ── Map App Buttons row ──
+   These open the location in Google Maps / Pathao / Yango
+   The OS itself shows a chooser when the user taps on mobile
+*/
+.map-app-buttons {
+  display:       flex;
+  gap:           var(--space-md);
+  flex-wrap:     wrap;
+  margin-bottom: var(--space-lg);
+}
+
+/* Base style for each map button */
+.map-app-btn {
+  display:        inline-flex;
+  align-items:    center;
+  gap:            var(--space-sm);
+  padding:        10px 20px;
+  border-radius:  var(--radius-sm);
+  font-family:    var(--font-body);
+  font-size:      0.8rem;
+  font-weight:    600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor:         pointer;
+  background:     var(--clr-dark-light);
+  color:          var(--clr-grey-light);
+  border:         1px solid var(--clr-border);
+  transition:     background   var(--duration-fast),
+                  color        var(--duration-fast),
+                  border-color var(--duration-fast),
+                  transform    var(--duration-fast);
+}
+
+.map-app-btn:hover {
+  background:  var(--clr-border);
+  color:       var(--clr-white);
+  transform:   translateY(-2px);
+}
+
+/* Primary map button — solid red fill */
+.map-app-btn-primary {
+  background:  var(--clr-red);
+  color:       var(--clr-white);
+  border-color: var(--clr-red);
+}
+
+.map-app-btn-primary:hover {
+  background:  var(--clr-red-dim);
+  border-color: var(--clr-red-dim);
+  color:       var(--clr-white);
+}
+
+
+/* ============================================================
+   17. PANEL: CONTACT FORM
+   ============================================================ */
+
+/* Form max-width — keeps it readable on wide screens */
+.contact-form {
+  max-width:      560px;
+}
+
+/* Each form field group (label + input) */
+.form-group {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-xs);
+  margin-bottom:  var(--space-lg);
+}
+
+/* Form labels */
+.form-group label {
+  font-size:      0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color:          var(--clr-grey-light);
+  font-weight:    600;
+}
+
+/* Text inputs, email, textarea, select — shared styles */
+.form-group input,
+.form-group textarea,
+.form-group select {
+  background:     var(--clr-dark-light);
+  border:         1px solid var(--clr-border);
+  border-radius:  var(--radius-sm);
+  padding:        12px var(--space-md);
+  color:          var(--clr-white);
+  font-size:      0.9rem;
+  transition:     border-color var(--duration-fast),
+                  box-shadow   var(--duration-fast);
+}
+
+/* Focus state — red glow border */
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--clr-red);
+  box-shadow:   0 0 0 3px var(--clr-red-glow);
+}
+
+/* Placeholder text colour */
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--clr-grey-mid);
+}
+
+/* Select dropdown options */
+.form-group select option {
+  background: var(--clr-dark);
+}
+
+/* Textarea — no horizontal resize */
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Error message displayed below invalid fields */
+.form-error {
+  font-size:  0.75rem;
+  color:      #ff4d4d;
+  min-height: 1em;
+}
+
+/* Full-width submit button */
+.btn-full {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ── Form status message (success/error after submit) ── */
+.form-status {
+  margin-top:     var(--space-md);
+  padding:        var(--space-md);
+  border-radius:  var(--radius-sm);
+  font-size:      0.9rem;
+  text-align:     center;
+  display:        none;           /* Shown by JS after submit */
+}
+
+.form-status.success {
+  display:        block;
+  background:     rgba(0, 200, 100, 0.1);
+  border:         1px solid rgba(0, 200, 100, 0.3);
+  color:          #4caf50;
+}
+
+.form-status.error {
+  display:        block;
+  background:     rgba(200, 16, 46, 0.1);
+  border:         1px solid rgba(200, 16, 46, 0.3);
+  color:          #ff4d4d;
+}
+
+
+/* ============================================================
+   18. FOOTER
+   ============================================================ */
+
+.site-footer {
+  background:       var(--clr-dark-mid);
+  border-top:       1px solid var(--clr-border);
+  padding:          var(--space-xl);
+  margin-right:     var(--sidebar-width);    /* Align with main content */
+}
+
+/* Responsive: no right offset on mobile */
+@media (max-width: 900px) {
+  .site-footer {
+    margin-right: 0;
+  }
+}
+
+/* Footer inner — three-column flex layout */
+.footer-inner {
+  display:        flex;
+  align-items:    center;
+  gap:            var(--space-xl);
+  flex-wrap:      wrap;
+}
+
+.footer-brand {
+  display:        flex;
+  flex-direction: column;
+  gap:            4px;
+}
+
+.footer-name {
+  font-family:    var(--font-display);
+  font-size:      0.9rem;
+  font-weight:    700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color:          var(--clr-white);
+}
+
+.footer-copy {
+  font-size:  0.7rem;
+  color:      var(--clr-grey-mid);
+}
+
+.footer-links {
+  display:    flex;
+  gap:        var(--space-xl);
+  flex:       1;
+  justify-content: center;
+}
+
+.footer-links a {
+  font-size:      0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color:          var(--clr-grey-mid);
+  font-weight:    500;
+  transition:     color var(--duration-fast);
+}
+
+.footer-links a:hover {
+  color: var(--clr-red);
+}
+
+.footer-social {
+  display:    flex;
+  gap:        var(--space-md);
+  margin-left: auto;
+}
+
+.footer-social a {
+  color:      var(--clr-grey-mid);
+  font-size:  1rem;
+  transition: color var(--duration-fast), transform var(--duration-fast);
+}
+
+.footer-social a:hover {
+  color:      var(--clr-red);
+  transform:  translateY(-2px);
+}
+
+
+/* ============================================================
+   19. BUTTONS
+   Reusable button styles used across the site.
+   ============================================================ */
+
+/* Base button — all button variants share these */
+.btn {
+  display:          inline-flex;
+  align-items:      center;
+  gap:              var(--space-sm);
+  padding:          12px 28px;
+  border-radius:    var(--radius-sm);
+  font-family:      var(--font-display);
+  font-size:        0.85rem;
+  font-weight:      600;
+  letter-spacing:   0.12em;
+  text-transform:   uppercase;
+  cursor:           pointer;
+  transition:       background     var(--duration-fast),
+                    color          var(--duration-fast),
+                    border-color   var(--duration-fast),
+                    transform      var(--duration-fast),
+                    box-shadow     var(--duration-fast);
+  white-space:      nowrap;
+}
+
+/* Primary — solid red */
+.btn-primary {
+  background-color: var(--clr-red);
+  color:            var(--clr-white);
+  border:           2px solid var(--clr-red);
+}
+
+.btn-primary:hover {
+  background-color: var(--clr-red-dim);
+  border-color:     var(--clr-red-dim);
+  transform:        translateY(-2px);
+  box-shadow:       0 8px 24px rgba(200, 16, 46, 0.4);
+}
+
+/* Ghost — transparent with white border */
+.btn-ghost {
+  background:   transparent;
+  color:        var(--clr-white);
+  border:       2px solid rgba(255,255,255,0.3);
+}
+
+.btn-ghost:hover {
+  border-color: var(--clr-white);
+  transform:    translateY(-2px);
+}
+
+/* Outline — transparent with red border */
+.btn-outline {
+  background:   transparent;
+  color:        var(--clr-red);
+  border:       2px solid var(--clr-red);
+}
+
+.btn-outline:hover {
+  background:   var(--clr-red);
+  color:        var(--clr-white);
+  transform:    translateY(-2px);
+}
+
+/* Icon inside button (send icon in form) */
+.btn-icon {
+  font-size: 0.8rem;
+}
+
+
+/* ============================================================
+   20. ANIMATIONS & KEYFRAMES
+   ============================================================ */
+
+/* Slide up + fade in — used for hero and panel entry */
+@keyframes fadeSlideUp {
+  from {
+    opacity:    0;
+    transform:  translateY(24px);
+  }
+  to {
+    opacity:    1;
+    transform:  translateY(0);
+  }
+}
+
+/* Pulse — subtle scale pulse for emphasis elements */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.04); }
+}
+
+/* Shimmer — loading effect if needed */
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to   { background-position:  200% 0; }
+}
+
+
+/* ============================================================
+   21. RESPONSIVE / MOBILE STYLES
+   Mobile-first breakpoints. Sidebar becomes overlay.
+   ============================================================ */
+
+/* ── Tablet: ≤ 900px ── */
+@media (max-width: 900px) {
+
+  /* Header adjustments */
+  .header-social .social-label {
+    display: none;       /* Hide "@handle" text, keep icons */
+  }
+
+  .header-nav-list {
+    gap: var(--space-lg);
+  }
+
+  /* Show hamburger button */
+  .hamburger {
+    display: flex;
+  }
+
+  /* Hide social icons in header on small screens */
+  .header-social {
+    display: none;
+  }
+
+  /* Sections: reduce padding */
+  .section {
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  /* Content panels: reduce padding */
+  .content-panel {
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  /* Footer */
+  .footer-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-links {
+    justify-content: center;
+  }
+
+  .footer-social {
+    margin-left: 0;
+  }
+}
+
+/* ── Mobile: ≤ 600px ── */
+@media (max-width: 600px) {
+
+  :root {
+    --space-xl:  24px;
+    --space-xxl: 40px;
+  }
+
+  /* Stack header items */
+  .header-logo .logo-name {
+    font-size: 1rem;
+  }
+
+  /* Hero headline smaller on mobile */
+  .headline-line {
+    font-size: clamp(3rem, 15vw, 5rem);
+  }
+
+  /* Stats: wrap to two rows on very small screens */
+  .hero-stats {
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+
+  /* Plans: single column */
+  .plans-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* PT packages: single column */
+  .pt-packages {
+    grid-template-columns: 1fr;
+  }
+
+  /* Coaches: single column */
+  .coaches-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Discipline highlights: single column */
+  .discipline-highlights {
+    grid-template-columns: 1fr;
+  }
+
+  /* Location cards: single column */
+  .location-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Footer links: wrap */
+  .footer-links {
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+}
+
+
+/* ============================================================
+   TRIAL CLASS PANEL
+   Sits inside the right sidebar content panel system.
+   Mobile-first — optimised for small screens.
+============================================================ */
+
+/* Marketing hook pills */
+.trial-hooks {
+  display:       flex;
+  flex-wrap:     wrap;
+  gap:           var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.trial-hook {
+  display:        flex;
+  align-items:    center;
+  gap:            6px;
+  background:     var(--clr-dark);
+  border:         1px solid var(--clr-border);
+  border-radius:  20px;
+  padding:        6px 14px;
+  font-size:      0.72rem;
+  font-weight:    600;
+  letter-spacing: 0.05em;
+  color:          var(--clr-grey-light);
+  text-transform: uppercase;
+  transition:     border-color var(--duration-fast), color var(--duration-fast);
+}
+
+.trial-hook i {
+  color:     var(--clr-red);
+  font-size: 0.65rem;
+}
+
+.trial-hook:hover {
+  border-color: var(--clr-red);
+  color:        var(--clr-white);
+}
+
+/* Application info note */
+.trial-note {
+  display:       flex;
+  align-items:   flex-start;
+  gap:           var(--space-sm);
+  font-size:     0.82rem;
+  color:         var(--clr-grey-light);
+  background:    var(--clr-dark);
+  border:        1px solid var(--clr-border);
+  border-left:   3px solid var(--clr-red);
+  border-radius: var(--radius-sm);
+  padding:       var(--space-md);
+  margin-bottom: var(--space-xl);
+  line-height:   1.6;
+}
+
+.trial-note i      { color: var(--clr-red); margin-top: 2px; flex-shrink: 0; }
+.trial-note strong { color: var(--clr-white); }
+
+/* Form container — full width inside panel */
+.trial-form {
+  width: 100%;
+}
+
+/* Two-column row for name+age, phone+school */
+.trial-form-row {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   var(--space-md);
+}
+
+/* Single field group */
+.trial-form-group {
+  display:        flex;
+  flex-direction: column;
+  gap:            5px;
+  margin-bottom:  var(--space-md);
+}
+
+.trial-form-group label {
+  font-size:      0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color:          var(--clr-grey-light);
+  font-weight:    600;
+  display:        flex;
+  align-items:    center;
+  gap:            6px;
+}
+
+.trial-form-group label i { color: var(--clr-red); font-size: 0.62rem; }
+
+/* Required asterisk */
+.req { color: var(--clr-red); }
+
+/* Inputs, selects, textarea */
+.trial-form-group input,
+.trial-form-group select,
+.trial-form-group textarea {
+  background:    var(--clr-dark-light);
+  border:        1px solid var(--clr-border);
+  border-radius: var(--radius-sm);
+  padding:       10px var(--space-md);
+  color:         var(--clr-white);
+  font-size:     0.88rem;
+  transition:    border-color var(--duration-fast), box-shadow var(--duration-fast);
+  width:         100%;
+}
+
+.trial-form-group input:focus,
+.trial-form-group select:focus,
+.trial-form-group textarea:focus {
+  border-color: var(--clr-red);
+  box-shadow:   0 0 0 3px var(--clr-red-glow);
+}
+
+.trial-form-group input::placeholder,
+.trial-form-group textarea::placeholder { color: var(--clr-grey-mid); }
+
+.trial-form-group select option { background: var(--clr-dark); }
+
+.trial-form-group textarea {
+  resize:     vertical;
+  min-height: 90px;
+}
+
+/* Validation error */
+.trial-error {
+  font-size:  0.7rem;
+  color:      #ff4d4d;
+  min-height: 1em;
+}
+
+/* ── Custom Checkbox Cards ── */
+.trial-checkboxes {
+  display:   flex;
+  gap:       var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.checkbox-label {
+  display:       flex;
+  align-items:   center;
+  gap:           var(--space-sm);
+  cursor:        pointer;
+  padding:       10px var(--space-md);
+  background:    var(--clr-dark);
+  border:        1px solid var(--clr-border);
+  border-radius: var(--radius-sm);
+  flex:          1;
+  min-width:     120px;
+  transition:    border-color var(--duration-fast), background var(--duration-fast);
+}
+
+.checkbox-label:hover { border-color: var(--clr-red); }
+
+/* Hide native checkbox */
+.checkbox-label input[type="checkbox"] { display: none; }
+
+/* Custom checkbox box */
+.checkbox-custom {
+  width:         16px;
+  height:        16px;
+  border:        2px solid var(--clr-border);
+  border-radius: 3px;
+  flex-shrink:   0;
+  transition:    background var(--duration-fast), border-color var(--duration-fast);
+  position:      relative;
+}
+
+/* Checked state */
+.checkbox-label input:checked ~ .checkbox-custom {
+  background:   var(--clr-red);
+  border-color: var(--clr-red);
+}
+
+/* Checkmark tick */
+.checkbox-label input:checked ~ .checkbox-custom::after {
+  content:     '✓';
+  position:    absolute;
+  top:         -2px;
+  left:        1px;
+  font-size:   11px;
+  color:       white;
+  font-weight: 700;
+}
+
+/* Highlight the whole card when checked */
+.checkbox-label:has(input:checked) {
+  border-color: var(--clr-red);
+  background:   rgba(200,16,46,0.1);
+}
+
+.checkbox-text {
+  font-size:      0.78rem;
+  font-weight:    600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color:          var(--clr-grey-light);
+  display:        flex;
+  align-items:    center;
+  gap:            6px;
+}
+
+.checkbox-text i { color: var(--clr-red); font-size: 0.65rem; }
+
+/* Submit button — full width */
+.trial-submit-btn {
+  width:           100%;
+  justify-content: center;
+  margin-top:      var(--space-sm);
+  font-size:       0.9rem;
+  padding:         14px;
+}
+
+/* ── Mobile: stack two-column rows to single column ── */
+@media (max-width: 600px) {
+
+  .trial-form-row {
+    grid-template-columns: 1fr;   /* Stack name/age and phone/school vertically */
+    gap:                   0;
+  }
+
+  .trial-checkboxes {
+    flex-direction: column;       /* Stack checkboxes vertically */
+  }
+
+  .checkbox-label {
+    min-width: 100%;
+  }
+
+  .trial-hooks {
+    gap: var(--space-xs);
+  }
+
+  .trial-hook {
+    font-size: 0.65rem;
+    padding:   5px 10px;
+  }
+}

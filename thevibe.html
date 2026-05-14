@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--
+  ============================================================
+  THE VIBE BOXING CLUB — Main HTML Structure
+  File: index.html
+  Description: Single-page website for a boxing gym.
+               Layout = Top Header + Right Sidebar Nav + Main Content Area
+  ============================================================
+-->
+
+<head>
+  <!-- Character encoding for all text/emoji support -->
+  <meta charset="UTF-8" />
+
+  <!-- Makes the page mobile responsive — scales to device width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO: Page title shown in browser tab -->
+  <title>The Vibe Boxing Club</title>
+
+  <!-- ── GOOGLE FONTS ──
+       Oswald     → bold condensed display font for headings/gym name
+       Barlow     → clean slightly condensed body font for readability
+       Both imported from Google's CDN (no install needed)
+  -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Barlow:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
+
+  <!-- ── FONT AWESOME ──
+       Icon library used for social media icons and decorative glyphs
+       Loaded from CDN so no local files needed
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- ── MAIN STYLESHEET ──
+       All custom styles live in styles.css (separate file)
+  -->
+  <link rel="stylesheet" href="vibestyles.css" />
+</head>
+
+<body>
+
+  <!-- ============================================================
+       OVERLAY — dark translucent layer sits over background images
+       to ensure text is always readable on any photo.
+       Controlled via CSS. Does not block pointer events.
+  ============================================================ -->
+  <div class="site-overlay"></div>
+
+  <!-- ============================================================
+       GRAIN TEXTURE OVERLAY
+       A subtle noise texture (SVG filter applied in CSS) layered
+       over the entire page for a gritty, industrial feel.
+  ============================================================ -->
+  <div class="grain-overlay"></div>
+
+
+  <!-- ============================================================
+       ██  HEADER  ██
+       Fixed at the top of the viewport.
+       Contains: gym name/logo | left nav links | social handles
+  ============================================================ -->
+  <header class="site-header" id="site-header">
+
+    <!-- ── LOGO / GYM NAME BLOCK ── -->
+    <div class="header-logo">
+      <!-- Small label above the name — acts as a category tag -->
+      <span class="logo-tag">EST. 2019</span>
+
+      <!-- Main gym name — clicking scrolls to #home section -->
+      <a href="#home" class="logo-name" data-scroll>
+        THE VIBE <span class="logo-accent">BOXING</span> CLUB
+      </a>
+    </div>
+    <!-- END logo -->
+
+
+    <!-- ── LEFT / CENTER NAVIGATION ──
+         Primary pages: Home, Coaches
+         These scroll to anchor sections on the page
+    -->
+    <nav class="header-nav" aria-label="Primary navigation">
+      <ul class="header-nav-list">
+
+        <!-- Home link → scrolls to #home -->
+        <li>
+          <a href="#home" class="nav-link" data-scroll data-section="home">
+            Home
+          </a>
+        </li>
+
+        <!-- Coaches link → scrolls to #coaches section -->
+        <li>
+          <a href="#coaches" class="nav-link" data-scroll data-section="coaches">
+            Coaches
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+    <!-- END header nav -->
+
+
+    <!-- ── SOCIAL MEDIA HANDLES ──
+         Icons link to actual social platforms.
+         Replace href="#" with real profile URLs.
+    -->
+    <div class="header-social">
+
+      <!-- Instagram — links to real profile -->
+      <a href="https://www.instagram.com/thevibeboxingclub?igsh=NWg4dDg2OWRmdHlp" class="social-link"
+        aria-label="Instagram" target="_blank" rel="noopener">
+        <i class="fab fa-instagram"></i>
+        <span class="social-label">@thevibeboxingclub</span>
+      </a>
+
+      <!-- Facebook — links to real page -->
+      <a href="https://www.facebook.com/share/1BE9gyTsdm/" class="social-link" aria-label="Facebook" target="_blank"
+        rel="noopener">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+
+      <!-- TikTok — links to real profile -->
+      <a href="https://www.tiktok.com/@vibeboxingclub?_r=1&_t=ZS-96CDLxa6qW8" class="social-link" aria-label="TikTok"
+        target="_blank" rel="noopener">
+        <i class="fab fa-tiktok"></i>
+      </a>
+
+      <!-- YouTube — links to real channel -->
+      <a href="https://youtube.com/@vibeboxingclub?si=V-xsx8dIC3kCHtj8" class="social-link" aria-label="YouTube"
+        target="_blank" rel="noopener">
+        <i class="fab fa-youtube"></i>
+      </a>
+
+    </div>
+    <!-- END social handles -->
+
+
+    <!-- ── HAMBURGER BUTTON ──
+         Visible only on mobile. Toggles the right sidebar on small screens.
+         Controlled by JavaScript (script.js → toggleSidebar)
+    -->
+    <button class="hamburger" id="hamburger-btn" aria-label="Toggle menu" aria-expanded="false">
+      <!-- Three lines that animate into an X when open -->
+      <span class="ham-line"></span>
+      <span class="ham-line"></span>
+      <span class="ham-line"></span>
+    </button>
+    <!-- END hamburger -->
+
+  </header>
+  <!-- ██  END HEADER  ██ -->
+
+
+  <!-- ============================================================
+       ██  RIGHT SIDEBAR NAVIGATION  ██
+       Fixed on the right side of the viewport (desktop).
+       On mobile it slides in from the right as a full overlay.
+       Contains: section links for detailed pages / info panels
+  ============================================================ -->
+  <aside class="right-sidebar" id="right-sidebar" aria-label="Section navigation">
+
+    <!-- Decorative label at the top of the sidebar -->
+
+    <div class="sidebar-label">NAVIGATE</div>
+
+
+    <!-- ── SIDEBAR NAV LINKS ──
+         Each link has a data-section attribute.
+         JS reads this to show the correct content panel in #content-area.
+    -->
+    <nav aria-label="Sidebar navigation">
+      <ul class="sidebar-nav-list">
+
+        <!-- Gym Hours link -->
+        <li>
+          <a href="#gym-time" class="sidebar-link" data-panel="gym-time">
+            <span class="sidebar-icon"><i class="fas fa-clock"></i></span>
+            <span class="sidebar-text">Gym Time</span>
+            <span class="sidebar-arrow">→</span>
+          </a>
+        </li>
+
+        <!-- Boxing plans link -->
+        <li>
+          <a href="#boxing" class="sidebar-link" data-panel="boxing">
+            <span class="sidebar-icon"><i class="fas fa-fist-raised"></i></span>
+            <span class="sidebar-text">Boxing</span>
+            <span class="sidebar-arrow">→</span>
+          </a>
+        </li>
+
+        <!-- Muay Thai link -->
+        <li>
+          <a href="#muay-thai" class="sidebar-link" data-panel="muay-thai">
+            <span class="sidebar-icon"><i class="fas fa-fire"></i></span>
+            <span class="sidebar-text">Muay Thai</span>
+            <span class="sidebar-arrow">→</span>
+          </a>
+        </li>
+
+        <!-- Kickboxing link -->
+        <li>
+          <a href="#kickboxing" class="sidebar-link" data-panel="kickboxing">
+            <span class="sidebar-icon"><i class="fas fa-shoe-prints"></i></span>
+            <span class="sidebar-text">Kickboxing</span>
+            <span class="sidebar-arrow">→</span>
+          </a>
+        </li>
+
+        <!-- Personal Training link -->
+        <li>
+          <a href="#personal-training" class="sidebar-link" data-panel="personal-training">
+            <span class="sidebar-icon"><i class="fas fa-dumbbell"></i></span>
+            <span class="sidebar-text">Personal Training</span>
+            <span class="sidebar-arrow">→</span>
+          </a>
+        </li>
+
+        <!-- Trial Class link -->
+        <li>
+          <a href="#trial" class="sidebar-link" data-panel="trial">
+            <span class="sidebar-icon"><i class="fas fa-medal"></i></span>
+            <span class="sidebar-text">Trial Class</span>
+            <span class="sidebar-arrow">→</span>
+          </a>
+        </li>
+
+        <!-- Gear Store link — opens VibeGears store page -->
+        <li>
+          <a href="vibestore.html" class="sidebar-link">
+            <span class="sidebar-icon"><i class="fas fa-store"></i></span>
+            <span class="sidebar-text">Gear Store</span>
+            <span class="sidebar-arrow">→</span>
+          </a>
+        </li>
+
+        <!-- Location link -->
+        <li>
+          <a href="#location" class="sidebar-link" data-panel="location">
+            <span class="sidebar-icon"><i class="fas fa-map-marker-alt"></i></span>
+            <span class="sidebar-text">Location</span>
+            <span class="sidebar-arrow">→</span>
+          </a>
+        </li>
+
+        <!-- Contact — red CTA button at the bottom -->
+        <li class="sidebar-cta-item">
+          <a href="#contact" class="sidebar-link sidebar-cta" data-panel="contact">
+            <span class="sidebar-icon"><i class="fas fa-envelope"></i></span>
+            <span class="sidebar-text">Contact Us</span>
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+    <!-- END sidebar nav -->
+
+    <!-- Decorative vertical text watermark inside sidebar -->
+    <div class="sidebar-watermark">VIBE</div>
+
+  </aside>
+  <!-- ██  END RIGHT SIDEBAR  ██ -->
+
+
+  <!-- ============================================================
+       ██  MAIN CONTENT WRAPPER  ██
+       All scrollable page content lives here.
+       Offset from header (top) and sidebar (right) via CSS.
+  ============================================================ -->
+  <main class="main-content" id="main-content">
+
+
+    <!-- ==========================================================
+         §  SECTION: HOME / HERO
+         id="home" — targeted by header nav "Home" link
+         Full-screen hero with gym tagline and CTA buttons.
+
+         BACKGROUND IMAGE PLACEHOLDER:
+         → Add your hero background image in styles.css
+         → Search for: /* BG-HOME */
+    ========================================================== -->
+    <section class="section hero-section" id="home">
+
+      <!-- Decorative diagonal accent bar behind hero text -->
+      <div class="hero-accent-bar"></div>
+
+      <!-- ── HERO CONTENT BOX ── -->
+      <div class="hero-content">
+
+        <!-- Small uppercase tag above main headline -->
+        <p class="hero-tag">Kathmandu's Elite Combat Training Club</p>
+
+        <!-- Main headline — split into lines for typographic control -->
+        <h1 class="hero-headline">
+          <span class="headline-line">TRAIN.</span>
+          <span class="headline-line accent-line">FIGHT.</span>
+          <span class="headline-line">EVOLVE.</span>
+        </h1>
+
+        <!-- Short description paragraph -->
+        <p class="hero-desc">
+          The Vibe Boxing Club is built for fighters, beginners, and athletes who want
+          real training in boxing, Muay Thai, and kickboxing. Train with experienced coaches
+          in a disciplined environment designed to push your limits and build confidence.
+        </p>
+
+        <!-- ── CTA BUTTONS ── -->
+        <div class="hero-cta-group">
+
+          <!-- Primary CTA: opens boxing plans panel in sidebar -->
+          <button class="btn btn-primary" data-open-panel="boxing">
+            View Plans
+          </button>
+
+          <!-- Secondary CTA: scrolls to coaches section -->
+          <a href="#coaches" class="btn btn-ghost" data-scroll>
+            Meet Coaches
+          </a>
+
+        </div>
+        <!-- END cta group -->
+
+      </div>
+      <!-- END hero content -->
+
+      <!-- ── HERO STATS BAR ──
+           Three quick numbers displayed in a row below the headline
+      -->
+      <div class="hero-stats">
+
+        <div class="stat-item">
+          <span class="stat-number">120+</span>
+          <span class="stat-label">Members</span>
+        </div>
+
+        <div class="stat-divider"></div>
+
+        <div class="stat-item">
+          <span class="stat-number">3</span>
+          <span class="stat-label">Disciplines</span>
+        </div>
+
+        <div class="stat-divider"></div>
+
+        <div class="stat-item">
+          <span class="stat-number">3</span>
+          <span class="stat-label">Pro Coaches</span>
+        </div>
+
+      </div>
+      <!-- END stats bar -->
+
+    </section>
+    <!-- END §HOME -->
+
+
+    <!-- ==========================================================
+         §  SECTION: ABOUT / INFO
+         Quick gym overview — who we are, what we stand for.
+
+         BACKGROUND IMAGE PLACEHOLDER:
+         → Add your about section image in styles.css
+         → Search for: /* BG-ABOUT */
+    ========================================================== -->
+    <section class="section about-section" id="about">
+
+      <!-- Section header with decorative line -->
+      <div class="section-header">
+        <span class="section-tag">Who We Are</span>
+        <h2 class="section-title">THE VIBE <span class="accent">STORY</span></h2>
+        <div class="section-line"></div>
+      </div>
+
+      <!-- ── ABOUT GRID: text on left, image-card on right ── -->
+      <div class="about-grid">
+
+        <!-- LEFT: text content -->
+        <div class="about-text">
+          <p class="about-para">
+            The Vibe Boxing Club was born from a simple belief:
+            <strong>fighting arts transform lives.</strong> Nestled in Kathmandu,
+            we built a space where beginners find confidence and fighters
+            sharpen their edge.
+          </p>
+
+          <p class="about-para">
+            Our gym isn't just a place to train — it's a community.
+            From your very first session to stepping on the podium,
+            every member gets the coaching, support, and fire they need.
+          </p>
+
+          <!-- ── VALUES LIST ── -->
+          <ul class="about-values">
+            <li><i class="fas fa-check-circle"></i> Discipline Over Motivation</li>
+            <li><i class="fas fa-check-circle"></i> Technique Before Power</li>
+            <li><i class="fas fa-check-circle"></i> Community First, Always</li>
+            <li><i class="fas fa-check-circle"></i> No Ego on the Mat</li>
+          </ul>
+
+        </div>
+        <!-- END about text -->
+
+        <!-- RIGHT: decorative image card
+             BACKGROUND IMAGE PLACEHOLDER → /* BG-ABOUT-CARD */
+        -->
+        <div class="about-image-card">
+          <div class="about-img-inner">
+            <!-- Image placeholder label — remove once real image is added -->
+            <div class="img-placeholder-label">
+
+
+            </div>
+          </div>
+          <!-- Decorative corner accent -->
+          <div class="about-card-corner"></div>
+        </div>
+        <!-- END image card -->
+
+      </div>
+      <!-- END about grid -->
+
+    </section>
+    <!-- END §ABOUT -->
+
+
+    <!-- ==========================================================
+         §  SECTION: COACHES
+         id="coaches" — targeted by header nav "Coaches" link
+         Shows coach cards in a grid.
+
+         BACKGROUND IMAGE PLACEHOLDER:
+         → Add section bg in styles.css → /* BG-COACHES */
+
+         TO ADD/REMOVE COACHES:
+         Simply copy or delete a .coach-card div block.
+    ========================================================== -->
+    <section class="section coaches-section" id="coaches">
+
+      <!-- Section heading -->
+      <div class="section-header">
+        <span class="section-tag">The Team</span>
+        <h2 class="section-title">YOUR <span class="accent">COACHES</span></h2>
+        <div class="section-line"></div>
+      </div>
+
+      <!-- ── COACHES GRID ──
+           Each .coach-card = one coach.
+           Duplicate or remove cards freely — no other code to change.
+      -->
+      <div class="coaches-grid">
+
+        <!-- ── COACH CARD 1: EZEKIEL PARIYAR ── -->
+        <article class="coach-card">
+
+          <!-- Coach photo — using uploaded image file coach-ezekiel.webp
+               Place this file in the same folder as index.html when uploading to GitHub -->
+          <div class="coach-photo"
+            style="background-image: url('coach-ezekiel.webp'); background-size: cover; background-position: center top;">
+            <!-- Placeholder icon hidden once image loads -->
+            <div class="coach-photo-placeholder" style="display:none;">
+              <i class="fas fa-user-alt"></i>
+            </div>
+            <!-- Multi-discipline badge -->
+            <span class="coach-badge">Boxing · Muay Thai · Kickboxing</span>
+          </div>
+
+          <div class="coach-info">
+            <h3 class="coach-name">Ezekiel Pariyar</h3>
+            <p class="coach-title">Head Coach — Boxing, Muay Thai & Kickboxing</p>
+            <div class="coach-social">
+              <a href="https://www.instagram.com/ezeboxingcoach/?utm_source=ig_web_button_share_sheet"
+                aria-label="Instagram" target="_blank" rel="noopener">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+            <p class="coach-bio">
+              With over 12 years of experience in combat sports, Ezekiel Pariyar brings
+              professional-level boxing, Muay Thai, and kickboxing training to The Vibe
+              Boxing Club. Certified in Thailand and experienced in Nepal National
+              competitions, he focuses on discipline, technique, and real fight conditioning.
+              His coaching style is built to help both beginners and advanced fighters grow
+              with confidence and proper fundamentals.
+            </p>
+
+          </div>
+
+        </article>
+        <!-- END coach 1 -->
+
+
+        <!-- ── COACH CARD 2: SANGITA RANA PARIYAR ── -->
+        <article class="coach-card">
+
+          <!-- Coach photo — using uploaded image file coach-sangita.jpg -->
+          <div class="coach-photo"
+            style="background-image: url('coach-sangita.jpg'); background-size: cover; background-position: center top;">
+            <div class="coach-photo-placeholder" style="display:none;">
+              <i class="fas fa-user-alt"></i>
+            </div>
+            <span class="coach-badge">Boxing · Strength & Conditioning</span>
+          </div>
+
+          <div class="coach-info">
+            <h3 class="coach-name">Sangita Rana Pariyar</h3>
+            <p class="coach-title">Boxing Coach & Strength and Conditioning Specialist</p>
+            <div class="coach-social">
+              <a href="https://www.instagram.com/coachsangita_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                aria-label="Instagram" target="_blank" rel="noopener">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+            <p class="coach-bio">
+              Sangita Rana Pariyar combines boxing expertise with fitness, nutrition,
+              and athletic conditioning to help members train smarter and perform better.
+              With 7 years of experience in boxing, she specialises in improving endurance,
+              strength, recovery, and overall fight readiness. Her approach focuses on
+              building both physical performance and long-term healthy training habits.
+            </p>
+
+          </div>
+
+        </article>
+        <!-- END coach 2 -->
+
+
+        <!-- ── COACH CARD 3: PUNAM PARIYAR ──
+             Photo placeholder kept — add coach-punam.jpg when available
+             Just drop the photo file in the same folder and update the url() below
+        -->
+        <article class="coach-card">
+
+          <!-- Photo placeholder — replace url('') with url('coach-punam.jpg') when ready -->
+          <div class="coach-photo"
+            style="background-image: url(''); background-size: cover; background-position: center top; background-color: #1a1a1a;">
+            <div class="coach-photo-placeholder">
+              <i class="fas fa-user-alt"></i>
+            </div>
+            <span class="coach-badge">Boxing · Fitness</span>
+          </div>
+
+          <div class="coach-info">
+            <h3 class="coach-name">Punam Pariyar</h3>
+            <p class="coach-title">Boxing & Fitness Coach</p>
+            <div class="coach-social">
+              <a href="https://www.instagram.com/puna_mpariyar?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                aria-label="Instagram" target="_blank" rel="noopener">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+            <p class="coach-bio">
+              Punam Pariyar focuses on helping beginners build a strong foundation in
+              boxing and fitness training. With 4 years of experience, she guides members
+              through proper stance, form correction, basic combinations, stretching, and
+              movement drills. Her supportive coaching style helps new trainees develop
+              confidence, discipline, and correct technique from the start.
+            </p>
+
+          </div>
+
+        </article>
+        <!-- END coach 3 -->
+
+        <!-- END coaches grid -->
+
+    </section>
+    <!-- END §COACHES -->
+
+
+
+
+    <!-- ==========================================================
+         §  DYNAMIC CONTENT PANEL AREA
+         When a sidebar link is clicked, the corresponding content
+         panel is injected/shown here by JavaScript.
+         All panels are hidden by default (display: none in CSS).
+         JS adds the class .panel-active to reveal them.
+    ========================================================== -->
+    <div class="content-panels-wrapper" id="content-panels-wrapper">
+
+      <!-- ────────────────────────────────────────────
+           PANEL: GYM TIME (Hours & Schedule)
+           Shown when "Gym Time" sidebar link is clicked
+      ──────────────────────────────────────────── -->
+      <div class="content-panel" id="panel-gym-time" role="region" aria-label="Gym Hours">
+
+        <div class="panel-header">
+          <button class="panel-close" aria-label="Close panel" data-close-panel>✕</button>
+          <span class="section-tag">Operating Hours</span>
+          <h2 class="section-title">GYM <span class="accent">TIME</span></h2>
+        </div>
+
+        <!-- ── OPERATING HOURS TABLE ── -->
+        <div class="schedule-table">
+
+          <div class="schedule-row">
+            <span class="schedule-day">Sunday – Friday</span>
+            <span class="schedule-time">5:00 AM – 8:30 PM</span>
+          </div>
+
+          <div class="schedule-row">
+            <span class="schedule-day">Saturday</span>
+            <span class="schedule-time">7:00 AM – 8:00 PM</span>
+          </div>
+
+          <!-- Public holiday row — closed, styled differently -->
+          <div class="schedule-row holiday-row">
+            <span class="schedule-day">Public Holidays</span>
+            <span class="schedule-time closed-label">Gym Closed</span>
+          </div>
+
+        </div>
+        <!-- END operating hours -->
+
+
+        <!-- ── BOXING WEEKLY SCHEDULE ── -->
+        <div class="class-timetable">
+
+          <h3 class="timetable-title">
+            <i class="fas fa-fist-raised"></i> Boxing Weekly Schedule
+          </h3>
+
+          <!-- Daily open session — always available -->
+
+          <div class="timetable-grid">
+            <div class="timetable-card timetable-always-open">
+              <div class="timetable-day">EVERY DAY</div>
+              <div class="timetable-class">Open Gym / Bag Work</div>
+              <div class="timetable-time">All hours</div>
+            </div>
+
+            <!-- Sun–Friday fundamentals block -->
+            <div class="timetable-card">
+              <div class="timetable-day">SUNDAY – FRIDAY</div>
+              <div class="timetable-class">Boxing Fundamentals</div>
+              <div class="timetable-time">6:00 AM – 8:30 PM</div>
+            </div>
+
+            <!-- Sunday -->
+            <div class="timetable-card">
+              <div class="timetable-day">SUNDAY</div>
+              <div class="timetable-class">Footwork</div>
+              <div class="timetable-time">Session focus</div>
+            </div>
+
+            <!-- Monday -->
+            <div class="timetable-card">
+              <div class="timetable-day">MONDAY</div>
+              <div class="timetable-class">Attack Drill</div>
+              <div class="timetable-time">Session focus</div>
+            </div>
+
+            <!-- Tuesday -->
+            <div class="timetable-card">
+              <div class="timetable-day">TUESDAY</div>
+              <div class="timetable-class">Partner Drill & Sparring</div>
+              <div class="timetable-time">Session focus</div>
+            </div>
+
+            <!-- Wednesday -->
+            <div class="timetable-card">
+              <div class="timetable-day">WEDNESDAY</div>
+              <div class="timetable-class">Long Runs & Defence Drill</div>
+              <div class="timetable-time">Session focus</div>
+            </div>
+
+            <!-- Thursday -->
+            <div class="timetable-card">
+              <div class="timetable-day">THURSDAY</div>
+              <div class="timetable-class">Weight Training & Plyometrics</div>
+              <div class="timetable-time">Session focus</div>
+            </div>
+
+            <!-- Friday -->
+            <div class="timetable-card">
+              <div class="timetable-day">FRIDAY</div>
+              <div class="timetable-class">Partner Drill & Sparring</div>
+              <div class="timetable-time">Session focus</div>
+            </div>
+
+            <!-- Saturday -->
+            <div class="timetable-card">
+              <div class="timetable-day">SATURDAY</div>
+              <div class="timetable-class">Long Runs / Active Rest</div>
+              <div class="timetable-time">Session focus</div>
+            </div>
+
+          </div>
+          <!-- END timetable grid -->
+
+        </div>
+        <!-- END boxing weekly schedule -->
+
+      </div>
+      <!-- END PANEL: GYM TIME -->
+
+
+      <!-- ────────────────────────────────────────────
+           PANEL: BOXING
+           Training plans for boxing discipline
+      ──────────────────────────────────────────── -->
+      <div class="content-panel" id="panel-boxing" role="region" aria-label="Boxing Plans">
+
+        <div class="panel-header">
+          <button class="panel-close" aria-label="Close panel" data-close-panel>✕</button>
+          <span class="section-tag">Discipline</span>
+          <h2 class="section-title"><span class="accent">BOXING</span> PLANS</h2>
+        </div>
+
+        <p class="panel-intro">
+          Our boxing programme covers everything from stance and footwork to advanced
+          combination sequences. Suitable for all ages and levels — from children to
+          adult competitors.
+        </p>
+
+        <!-- ── 4 PRICING CARDS ── -->
+        <div class="plans-grid">
+
+          <!-- Plan 1: Children (below 15) -->
+          <div class="plan-card">
+            <div class="plan-badge">Children</div>
+            <p class="plan-age-note">Under 15 years</p>
+            <div class="plan-price">
+              <span class="price-currency">NPR</span>
+              <span class="price-amount">3,500</span>
+              <span class="price-period">/month</span>
+            </div>
+            <ul class="plan-features">
+              <li><i class="fas fa-check"></i> 6 classes per week</li>
+              <li><i class="fas fa-check"></i> Group sessions</li>
+              <li><i class="fas fa-check"></i> Bag & equipment access</li>
+              <li><i class="fas fa-check"></i> Sparring included</li>
+              <li class="disabled"><i class="fas fa-times"></i> 1-on-1 session</li>
+            </ul>
+            <a href="#contact" class="btn btn-outline" data-open-panel="contact">Enrol Now</a>
+          </div>
+
+          <!-- Plan 2: Starter -->
+          <div class="plan-card">
+            <div class="plan-badge">Starter</div>
+            <p class="plan-age-note">All ages welcome</p>
+            <div class="plan-price">
+              <span class="price-currency">NPR</span>
+              <span class="price-amount">3,500</span>
+              <span class="price-period">/month</span>
+            </div>
+            <ul class="plan-features">
+              <li><i class="fas fa-check"></i> 3 classes per week</li>
+              <li><i class="fas fa-check"></i> Group sessions</li>
+              <li><i class="fas fa-check"></i> Bag & equipment access</li>
+              <li class="disabled"><i class="fas fa-times"></i> Sparring included</li>
+              <li class="disabled"><i class="fas fa-times"></i> 1-on-1 session</li>
+            </ul>
+            <a href="#contact" class="btn btn-outline" data-open-panel="contact">Enrol Now</a>
+          </div>
+
+          <!-- Plan 3: SEE / +2 Students — highlighted as popular -->
+          <div class="plan-card plan-featured">
+            <div class="plan-popular-tag">Student Special</div>
+            <div class="plan-badge">SEE & +2</div>
+            <p class="plan-age-note">Students only</p>
+            <div class="plan-price">
+              <span class="price-currency">NPR</span>
+              <span class="price-amount">4,500</span>
+              <span class="price-period">/month</span>
+            </div>
+            <ul class="plan-features">
+              <li><i class="fas fa-check"></i> 6 classes per week</li>
+              <li><i class="fas fa-check"></i> Group sessions</li>
+              <li><i class="fas fa-check"></i> Bag & equipment access</li>
+              <li><i class="fas fa-check"></i> Sparring included</li>
+              <li class="disabled"><i class="fas fa-times"></i> 1-on-1 session</li>
+            </ul>
+            <a href="#contact" class="btn btn-primary" data-open-panel="contact">Enrol Now</a>
+          </div>
+
+          <!-- Plan 4: Adults — full package -->
+          <div class="plan-card">
+            <div class="plan-badge">Adults</div>
+            <p class="plan-age-note">18 years and above</p>
+            <div class="plan-price">
+              <span class="price-currency">NPR</span>
+              <span class="price-amount">5,500</span>
+              <span class="price-period">/month</span>
+            </div>
+            <ul class="plan-features">
+              <li><i class="fas fa-check"></i> Unlimited classes</li>
+              <li><i class="fas fa-check"></i> Group sessions</li>
+              <li><i class="fas fa-check"></i> Bag & equipment access</li>
+              <li><i class="fas fa-check"></i> Sparring included</li>
+              <li><i class="fas fa-check"></i> 1-on-1 session</li>
+            </ul>
+            <a href="#contact" class="btn btn-outline" data-open-panel="contact">Enrol Now</a>
+          </div>
+
+        </div>
+        <!-- END plans grid -->
+
+      </div>
+      <!-- END PANEL: BOXING -->
+
+
+      <!-- ────────────────────────────────────────────
+           PANEL: MUAY THAI
+      ──────────────────────────────────────────── -->
+      <div class="content-panel" id="panel-muay-thai" role="region" aria-label="Muay Thai">
+
+        <div class="panel-header">
+          <button class="panel-close" aria-label="Close panel" data-close-panel>✕</button>
+          <span class="section-tag">Discipline</span>
+          <h2 class="section-title"><span class="accent">MUAY THAI</span></h2>
+        </div>
+
+        <p class="panel-intro">
+          The Art of Eight Limbs — punches, kicks, elbows, knees.
+          Our Kru-certified coaches bring authentic Thai methodology to Kathmandu.
+        </p>
+
+        <!-- What's included highlight list -->
+        <div class="discipline-highlights">
+          <div class="highlight-item">
+            <i class="fas fa-fire"></i>
+            <h4>Clinch Work</h4>
+            <p>Dominate close range with sweeps, knees, and off-balancing.</p>
+          </div>
+          <div class="highlight-item">
+            <i class="fas fa-bolt"></i>
+            <h4>Elbow & Knee Techniques</h4>
+            <p>The weapons that separate Muay Thai from all other combat sports.</p>
+          </div>
+          <div class="highlight-item">
+            <i class="fas fa-shield-alt"></i>
+            <h4>Defence & Counters</h4>
+            <p>Teep, cover, parry, and return — control the range and the fight.</p>
+          </div>
+          <div class="highlight-item">
+            <i class="fas fa-medal"></i>
+            <h4>Competition Prep</h4>
+            <p>Dedicated fight prep tracks for those aiming for amateur bouts.</p>
+          </div>
+        </div>
+
+        <div class="plans-grid">
+          <div class="plan-card">
+            <div class="plan-badge">Beginner</div>
+            <div class="plan-price">
+              <span class="price-currency">NPR</span>
+              <span class="price-amount">2,800</span>
+              <span class="price-period">/month</span>
+            </div>
+            <ul class="plan-features">
+              <li><i class="fas fa-check"></i> 3 sessions/week</li>
+              <li><i class="fas fa-check"></i> Fundamentals focus</li>
+              <li><i class="fas fa-check"></i> Pad work included</li>
+              <li class="disabled"><i class="fas fa-times"></i> Sparring</li>
+            </ul>
+            <a href="#contact" class="btn btn-outline" data-open-panel="contact">Enrol</a>
+          </div>
+          <div class="plan-card plan-featured">
+            <div class="plan-popular-tag">Recommended</div>
+            <div class="plan-badge">Nak Muay</div>
+            <div class="plan-price">
+              <span class="price-currency">NPR</span>
+              <span class="price-amount">4,800</span>
+              <span class="price-period">/month</span>
+            </div>
+            <ul class="plan-features">
+              <li><i class="fas fa-check"></i> Unlimited sessions</li>
+              <li><i class="fas fa-check"></i> Clinch & sparring</li>
+              <li><i class="fas fa-check"></i> Thai pad combos</li>
+              <li><i class="fas fa-check"></i> Fight team access</li>
+            </ul>
+            <a href="#contact" class="btn btn-primary" data-open-panel="contact">Enrol</a>
+          </div>
+        </div>
+
+      </div>
+      <!-- END PANEL: MUAY THAI -->
+
+
+      <!-- ────────────────────────────────────────────
+           PANEL: KICKBOXING
+      ──────────────────────────────────────────── -->
+      <div class="content-panel" id="panel-kickboxing" role="region" aria-label="Kickboxing">
+
+        <div class="panel-header">
+          <button class="panel-close" aria-label="Close panel" data-close-panel>✕</button>
+          <span class="section-tag">Discipline</span>
+          <h2 class="section-title"><span class="accent">KICKBOXING</span></h2>
+        </div>
+
+        <p class="panel-intro">
+          High-energy, full-body striking. Kickboxing blends Western boxing
+          hands with dynamic kicking technique — explosive, athletic, and effective.
+        </p>
+
+        <div class="discipline-highlights">
+          <div class="highlight-item">
+            <i class="fas fa-shoe-prints"></i>
+            <h4>Kick Combinations</h4>
+            <p>Roundhouse, front kick, side kick, and spinning variations.</p>
+          </div>
+          <div class="highlight-item">
+            <i class="fas fa-fist-raised"></i>
+            <h4>Boxing Integration</h4>
+            <p>Seamless hand-foot combinations for real ring effectiveness.</p>
+          </div>
+          <div class="highlight-item">
+            <i class="fas fa-heartbeat"></i>
+            <h4>Cardio & Conditioning</h4>
+            <p>Kickboxing training is one of the best full-body cardio workouts.</p>
+          </div>
+          <div class="highlight-item">
+            <i class="fas fa-trophy"></i>
+            <h4>K-1 Rules</h4>
+            <p>International-standard rule sets for competitive fighters.</p>
+          </div>
+        </div>
+
+        <div class="plans-grid">
+          <div class="plan-card">
+            <div class="plan-badge">Basic</div>
+            <div class="plan-price">
+              <span class="price-currency">NPR</span>
+              <span class="price-amount">2,500</span>
+              <span class="price-period">/month</span>
+            </div>
+            <ul class="plan-features">
+              <li><i class="fas fa-check"></i> 3 classes/week</li>
+              <li><i class="fas fa-check"></i> Bag work</li>
+              <li class="disabled"><i class="fas fa-times"></i> Sparring</li>
+            </ul>
+            <a href="#contact" class="btn btn-outline" data-open-panel="contact">Join</a>
+          </div>
+          <div class="plan-card plan-featured">
+            <div class="plan-popular-tag">Popular</div>
+            <div class="plan-badge">Pro</div>
+            <div class="plan-price">
+              <span class="price-currency">NPR</span>
+              <span class="price-amount">4,200</span>
+              <span class="price-period">/month</span>
+            </div>
+            <ul class="plan-features">
+              <li><i class="fas fa-check"></i> Unlimited classes</li>
+              <li><i class="fas fa-check"></i> Sparring access</li>
+              <li><i class="fas fa-check"></i> Competition prep</li>
+            </ul>
+            <a href="#contact" class="btn btn-primary" data-open-panel="contact">Join</a>
+          </div>
+        </div>
+
+      </div>
+      <!-- END PANEL: KICKBOXING -->
+
+
+      <!-- ────────────────────────────────────────────
+           PANEL: PERSONAL TRAINING
+      ──────────────────────────────────────────── -->
+      <div class="content-panel" id="panel-personal-training" role="region" aria-label="Personal Training">
+
+        <div class="panel-header">
+          <button class="panel-close" aria-label="Close panel" data-close-panel>✕</button>
+          <span class="section-tag">1-on-1 Coaching</span>
+          <h2 class="section-title">PERSONAL <span class="accent">TRAINING</span></h2>
+        </div>
+
+        <p class="panel-intro">
+          Dedicated one-on-one sessions tailored entirely to your goals.
+          Whether it's weight loss, fight prep, or pure skill development —
+          your coach is 100% focused on you. Each session is 90 minutes.
+        </p>
+
+        <div class="pt-packages">
+
+          <!-- Plan 1: Single session -->
+          <div class="pt-card">
+            <div class="pt-icon"><i class="fas fa-user-shield"></i></div>
+            <h3>Single Session</h3>
+            <div class="pt-price">NPR 1,000 <span>/ 90 min</span></div>
+            <p>Try it once before committing. Perfect for first-timers or drop-ins.</p>
+          </div>
+
+          <!-- Plan 2: 15-session pack — featured -->
+          <div class="pt-card pt-card-featured">
+            <div class="pt-icon"><i class="fas fa-layer-group"></i></div>
+            <h3>15-Session Pack</h3>
+            <div class="pt-price">NPR 10,000 <span>/ 90 min per session</span></div>
+            <p>Best value for consistent monthly training. Save more per session.</p>
+          </div>
+
+          <!-- Plan 3: 6-week fight camp -->
+          <div class="pt-card">
+            <div class="pt-icon"><i class="fas fa-crown"></i></div>
+            <h3>6-Week Camp</h3>
+            <div class="pt-price">NPR 22,000 <span>/ 90 min per session</span></div>
+            <p>Full 6-week programme: technique, conditioning, strategy, and fight prep.</p>
+          </div>
+
+        </div>
+
+        <!-- How to book CTA -->
+        <div class="pt-cta-block">
+          <p>Ready to book your first session?</p>
+          <a href="#contact" class="btn btn-primary" data-open-panel="contact">
+            Book a Session
+          </a>
+        </div>
+
+      </div>
+      <!-- END PANEL: PERSONAL TRAINING -->
+      <!-- ────────────────────────────────────────────
+           PANEL: LOCATION
+      ──────────────────────────────────────────── -->
+      <div class="content-panel" id="panel-location" role="region" aria-label="Location">
+
+        <div class="panel-header">
+          <button class="panel-close" aria-label="Close panel" data-close-panel>✕</button>
+          <span class="section-tag">Find Us</span>
+          <h2 class="section-title">OUR <span class="accent">LOCATIONS</span></h2>
+        </div>
+
+        <!-- ── CONTACT INFO ROW: Phone & Email with tap-to-action ── -->
+        <div class="location-info-grid">
+
+          <!-- Phone: clicking opens default phone dialler on mobile -->
+          <div class="location-card">
+            <i class="fas fa-phone"></i>
+            <h4>Phone</h4>
+            <p>
+              <!-- tel: protocol opens default phone app when tapped -->
+              <a href="tel:+9779808872779" class="contact-action-link">
+                +977 9808872779
+              </a>
+            </p>
+          </div>
+
+          <!-- Email: clicking opens default mail app with our email pre-filled -->
+          <div class="location-card">
+            <i class="fas fa-envelope"></i>
+            <h4>Email</h4>
+            <p>
+              <!-- mailto: protocol opens mail app with To: pre-filled -->
+              <a href="mailto:thevibevibeboxing@gmail.com" class="contact-action-link">
+                thevibeboxing@gmail.com
+              </a>
+            </p>
+          </div>
+
+        </div>
+        <!-- END contact info row -->
+
+
+        <!-- ════════════════════════════════════════════
+             BRANCH 1: MAIN BRANCH
+        ════════════════════════════════════════════ -->
+        <div class="branch-block">
+
+          <!-- Branch label / heading -->
+          <div class="branch-heading">
+            <span class="branch-tag">Main Branch</span>
+            <h3 class="branch-name">Vibe Boxing Club</h3>
+          </div>
+
+          <!-- Address text -->
+          <p class="branch-address">
+            <i class="fas fa-map-marker-alt"></i>
+            Nayabazar Marg, above Shuvam Super Store building,
+            Kathmandu, Nepal
+          </p>
+
+          <!-- Directions note for this branch -->
+          <p class="directions-note">
+            <i class="fas fa-info-circle"></i>
+            We are located at Nayabazar Marg, above Shuvam Super Store building.
+            Look for the Vibe sign at street level.
+          </p>
+
+          <!-- ── OPEN IN MAP / RIDE APP BUTTONS ──
+               geo: URI is the universal standard.
+               On Android it shows a chooser: Google Maps, Pathao, Yango, etc.
+               On iPhone it opens Apple Maps (or the user's default map app).
+               The Google Maps share link is a fallback for desktop browsers.
+          -->
+          <div class="map-app-buttons">
+
+            <!-- geo: link — triggers OS app chooser on mobile (Pathao, Yango, Google Maps etc.) -->
+            <a href="https://maps.app.goo.gl/aoMN6VfncH2sb4nj7" class="map-app-btn map-app-btn-primary" target="_blank"
+              rel="noopener" aria-label="Open Main Branch in Maps">
+              <i class="fas fa-map-marked-alt"></i>
+              Open in Maps
+            </a>
+
+            <!-- Direct Google Maps link as backup for desktop -->
+            <a href="https://maps.app.goo.gl/aoMN6VfncH2sb4nj7" class="map-app-btn" target="_blank" rel="noopener"
+              aria-label="Open in Google Maps">
+              <i class="fab fa-google"></i>
+              Google Maps
+            </a>
+
+          </div>
+          <!-- END map app buttons -->
+
+          <!-- ── EMBEDDED MAP: Main Branch ──
+               This iframe embeds Google Maps directly in the page.
+               HOW TO GET YOUR EMBED CODE:
+                 1. Go to maps.google.com
+                 2. Search your location
+                 3. Click Share → Embed a map
+                 4. Copy the src="..." URL from the iframe code
+                 5. Paste it below replacing the src value
+          -->
+          <div class="map-wrapper">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3531.803855840139!2d85.30414127566462!3d27.723341724785573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19515ef68b41%3A0x8def23da03b7f04d!2sThe%20Vibe%20Boxing%20Club!5e0!3m2!1sen!2sus!4v1778739625596!5m2!1sen!2sus" "
+              width=" 100%" height="300" style="border:0; border-radius: 8px;" allowfullscreen loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade" title="Vibe Boxing Club Main Branch Map"></iframe>
+            <!-- NOTE: Replace the src above with the embed src from your Google Maps share link -->
+          </div>
+
+        </div>
+        <!-- END BRANCH 1 -->
+
+
+        <!-- ════════════════════════════════════════════
+             BRANCH 2: MMA BRANCH
+        ════════════════════════════════════════════ -->
+        <div class="branch-block">
+
+          <!-- Branch label / heading -->
+          <div class="branch-heading">
+            <span class="branch-tag branch-tag-alt">MMA Branch</span>
+            <h3 class="branch-name">Vibe Boxing Club — MMA</h3>
+          </div>
+
+          <!-- Address text (update when you have full address) -->
+          <p class="branch-address">
+            <i class="fas fa-map-marker-alt"></i>
+            Kathmandu, Nepal
+            <!-- Add full MMA branch address here when available -->
+          </p>
+
+          <!-- Map app buttons for MMA branch -->
+          <div class="map-app-buttons">
+
+            <a href="https://maps.app.goo.gl/NjxPYhN6bGL6BnYQ6" class="map-app-btn map-app-btn-primary" target="_blank"
+              rel="noopener" aria-label="Open MMA Branch in Maps">
+              <i class="fas fa-map-marked-alt"></i>
+              Open in Maps
+            </a>
+
+            <a href="https://maps.app.goo.gl/NjxPYhN6bGL6BnYQ6" class="map-app-btn" target="_blank" rel="noopener"
+              aria-label="Open in Google Maps">
+              <i class="fab fa-google"></i>
+              Google Maps
+            </a>
+
+          </div>
+
+          <!-- Embedded map for MMA branch -->
+          <div class="map-wrapper">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3531.98606495612!2d85.26640377566444!3d27.717716525033754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb23006f798621%3A0x32b805fe7705ecb4!2sVibe%20boxing%20and%20MMA%20club%20sitapaila!5e0!3m2!1sen!2sus!4v1778739839915!5m2!1sen!2sus"
+              width="100%" height="300" style="border:0; border-radius: 8px;" allowfullscreen loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade" title="Vibe Boxing Club MMA Branch Map"></iframe>
+            <!-- NOTE: Replace the src above with the embed src from the MMA branch Google Maps share link -->
+          </div>
+
+        </div>
+        <!-- END BRANCH 2 -->
+
+      </div>
+      <!-- END PANEL: LOCATION -->
+
+
+      <!-- ────────────────────────────────────────────
+           PANEL: CONTACT
+           Simple contact form — single developer friendly.
+           No backend needed; can hook to Formspree or EmailJS.
+      ──────────────────────────────────────────── -->
+      <div class="content-panel" id="panel-contact" role="region" aria-label="Contact Us">
+
+        <div class="panel-header">
+          <button class="panel-close" aria-label="Close panel" data-close-panel>✕</button>
+          <span class="section-tag">Get In Touch</span>
+          <h2 class="section-title">CONTACT <span class="accent">US</span></h2>
+        </div>
+
+        <p class="panel-intro">
+          Have questions? Want to book a trial class? Drop us a message
+          and we'll get back to you within 24 hours.
+        </p>
+
+        <!-- ── CONTACT FORM ──
+             ACTION: Replace action="#" with your Formspree or EmailJS endpoint.
+             Example Formspree: action="https://formspree.io/f/YOUR_FORM_ID"
+        -->
+        <!-- CONTACT FORM
+     Backend: Web3Forms — sends directly to thevibeboxing@gmail.com
+     No Formspree. No backend server. Just HTML + JS fetch().
+     Web3Forms access key is free and permanent.
+-->
+        <form class="contact-form" id="contact-form" novalidate>
+
+          <!-- ═══════════════════════════════════════════════════════
+             WEB3FORMS SETUP (one-time, takes 2 minutes):
+             1. Go to: https://web3forms.com/create
+             2. Enter: thevibeboxing@gmail.com
+             3. Copy the Access Key they give you
+             4. Paste it in value="" below (replace YOUR_KEY_HERE)
+             Forms will then arrive directly in your Gmail inbox.
+        ═══════════════════════════════════════════════════════ -->
+          <input type="hidden" name="access_key" value="68c51a39-684a-4d45-9420-cca628e4e017" />
+          <input type="hidden" name="subject" value="New Enquiry — Vibe Boxing Club" />
+          <input type="hidden" name="from_name" value="Vibe Boxing Club Website" />
+          <!-- Honeypot spam protection -->
+          <input type="checkbox" name="botcheck" style="display:none;" />
+
+          <!-- Full Name -->
+          <div class="form-group">
+            <label for="contact-name">Full Name</label>
+            <input type="text" id="contact-name" name="name" placeholder="Your Name" required />
+            <span class="form-error" id="error-name"></span>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label for="contact-email">Email Address</label>
+            <input type="email" id="contact-email" name="email" placeholder="you@example.com" required />
+            <span class="form-error" id="error-email"></span>
+          </div>
+
+          <!-- Phone Number — new field -->
+          <div class="form-group">
+            <label for="contact-phone">Phone Number</label>
+            <input type="tel" id="contact-phone" name="phone" placeholder="98XXXXXXXX" required />
+            <span class="form-error" id="error-phone"></span>
+          </div>
+
+          <!-- Interest -->
+          <div class="form-group">
+            <label for="contact-interest">I'm interested in...</label>
+            <select id="contact-interest" name="interest">
+              <option value="">Select a programme</option>
+              <option value="Boxing">Boxing</option>
+              <option value="Muay Thai">Muay Thai</option>
+              <option value="Kickboxing">Kickboxing</option>
+              <option value="Personal Training">Personal Training</option>
+              <option value="General Enquiry">General Enquiry</option>
+            </select>
+          </div>
+
+          <!-- Message -->
+          <div class="form-group">
+            <label for="contact-message">Message</label>
+            <textarea id="contact-message" name="message" rows="4"
+              placeholder="Tell us about your goals or ask your question..." required></textarea>
+            <span class="form-error" id="error-message"></span>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full" id="form-submit-btn">
+            <span class="btn-text">Send Message</span>
+            <i class="fas fa-paper-plane btn-icon"></i>
+          </button>
+
+          <div class="form-status" id="form-status" aria-live="polite"></div>
+        </form>
+
+      </div>
+      <!-- END PANEL: CONTACT -->
+
+      <!-- ────────────────────────────────────────────
+           PANEL: TRIAL CLASS APPLICATION
+           Application-based system — not first come first serve.
+           Formspree endpoint: https://formspree.io/f/xrejjpov
+      ──────────────────────────────────────────── -->
+      <div class="content-panel" id="panel-trial" role="region" aria-label="Trial Class">
+
+        <div class="panel-header">
+          <button class="panel-close" aria-label="Close panel" data-close-panel>✕</button>
+          <span class="section-tag">Limited Spots Available</span>
+          <h2 class="section-title">START YOUR <span class="accent">TRIAL</span></h2>
+          <div class="section-line"></div>
+        </div>
+
+        <!-- Marketing hook pills -->
+        <div class="trial-hooks">
+          <div class="trial-hook"><i class="fas fa-fist-raised"></i> Train Like a Fighter</div>
+          <div class="trial-hook"><i class="fas fa-brain"></i> Build Confidence</div>
+          <div class="trial-hook"><i class="fas fa-shield-alt"></i> Learn Discipline</div>
+          <div class="trial-hook"><i class="fas fa-heartbeat"></i> Improve Fitness</div>
+          <div class="trial-hook"><i class="fas fa-user-check"></i> Beginner Friendly</div>
+          <div class="trial-hook"><i class="fas fa-door-open"></i> No Experience Needed</div>
+        </div>
+
+        <!-- Application info note -->
+        <p class="trial-note">
+          <i class="fas fa-info-circle"></i>
+          We review every application personally. Selected applicants will be contacted
+          within <strong>48 hours</strong> to confirm their trial slot.
+        </p>
+
+        <!-- ── TRIAL APPLICATION FORM ──
+             Submits to Formspree — lands directly in your inbox.
+             All fields labeled clearly so you can review each applicant.
+        -->
+        <form class="trial-form" id="trial-form" novalidate>
+          <!-- Formspree: custom subject line in inbox -->
+          <!-- ═══════════════════════════════════════════════════════
+             WEB3FORMS SETUP (same key as contact form above):
+             Paste your Access Key from https://web3forms.com/create
+        ═══════════════════════════════════════════════════════ -->
+          <input type="hidden" name="access_key" value="68c51a39-684a-4d45-9420-cca628e4e017" />
+          <input type="hidden" name="subject" value="New Trial Class Application — Vibe Boxing Club" />
+          <input type="hidden" name="from_name" value="Vibe Boxing Club Website" />
+          <input type="checkbox" name="botcheck" style="display:none;" />
+
+          <!-- ── ROW 1: Name + Age ── -->
+          <div class="trial-form-row">
+
+            <div class="trial-form-group">
+              <label for="trial-name">
+                <i class="fas fa-user"></i> Full Name <span class="req">*</span>
+              </label>
+              <input type="text" id="trial-name" name="Full Name" placeholder="Your full name" required />
+              <span class="trial-error" id="terr-name"></span>
+            </div>
+
+            <div class="trial-form-group">
+              <label for="trial-age">
+                <i class="fas fa-birthday-cake"></i> Age <span class="req">*</span>
+              </label>
+              <input type="number" id="trial-age" name="Age" placeholder="Your age" min="5" max="70" required />
+              <span class="trial-error" id="terr-age"></span>
+            </div>
+
+          </div>
+          <!-- END ROW 1 -->
+
+          <!-- ── ROW 2: Phone + School/College ── -->
+          <div class="trial-form-row">
+
+            <div class="trial-form-group">
+              <label for="trial-phone">
+                <i class="fas fa-phone"></i> Phone Number <span class="req">*</span>
+              </label>
+              <input type="tel" id="trial-phone" name="Phone Number" placeholder="98XXXXXXXX" required />
+              <span class="trial-error" id="terr-phone"></span>
+            </div>
+
+            <div class="trial-form-group">
+              <label for="trial-school">
+                <i class="fas fa-graduation-cap"></i> School / College
+              </label>
+              <input type="text" id="trial-school" name="School or College"
+                placeholder="Where do you study? (optional)" />
+            </div>
+
+          </div>
+          <!-- END ROW 2 -->
+
+          <!-- ── FITNESS EXPERIENCE ── -->
+          <div class="trial-form-group">
+            <label for="trial-fitness">
+              <i class="fas fa-dumbbell"></i> Fitness Experience <span class="req">*</span>
+            </label>
+            <select id="trial-fitness" name="Fitness Experience" required>
+              <option value="">Select your current level</option>
+              <option value="None — complete beginner">None — complete beginner</option>
+              <option value="Some — light exercise or sports">Some — light exercise or sports</option>
+              <option value="Moderate — gym or regular training">Moderate — gym or regular training</option>
+              <option value="Advanced — competitive athlete">Advanced — competitive athlete</option>
+            </select>
+            <span class="trial-error" id="terr-fitness"></span>
+          </div>
+
+          <!-- ── WHY DO YOU WANT TO JOIN ── -->
+          <div class="trial-form-group">
+            <label for="trial-why">
+              <i class="fas fa-fire"></i> Why do you want to join? <span class="req">*</span>
+            </label>
+            <textarea id="trial-why" name="Why They Want to Join" rows="3"
+              placeholder="Your goals, motivation, anything you'd like us to know..." required></textarea>
+            <span class="trial-error" id="terr-why"></span>
+          </div>
+
+          <!-- ── PREFERRED TRAINING ── -->
+          <div class="trial-form-group">
+            <label><i class="fas fa-fist-raised"></i> Preferred Training <span class="req">*</span></label>
+            <div class="trial-checkboxes">
+
+              <label class="checkbox-label">
+                <input type="checkbox" name="Preferred Training" value="Boxing" />
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-text"><i class="fas fa-fist-raised"></i> Boxing</span>
+              </label>
+
+              <label class="checkbox-label">
+                <input type="checkbox" name="Preferred Training" value="Muay Thai" />
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-text"><i class="fas fa-fire"></i> Muay Thai</span>
+              </label>
+
+              <label class="checkbox-label">
+                <input type="checkbox" name="Preferred Training" value="Fitness / Conditioning" />
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-text"><i class="fas fa-heartbeat"></i> Fitness</span>
+              </label>
+
+            </div>
+            <span class="trial-error" id="terr-training"></span>
+          </div>
+
+          <!-- ── AVAILABLE TIMING ── -->
+          <div class="trial-form-group">
+            <label for="trial-timing">
+              <i class="fas fa-clock"></i> Available Timing <span class="req">*</span>
+            </label>
+            <select id="trial-timing" name="Available Timing" required>
+              <option value="">Select preferred time slot</option>
+              <option value="Early Morning (5:00 AM – 7:00 AM)">Early Morning (5:00 AM – 7:00 AM)</option>
+              <option value="Morning (7:00 AM – 10:00 AM)">Morning (7:00 AM – 10:00 AM)</option>
+              <option value="Afternoon (12:00 PM – 3:00 PM)">Afternoon (12:00 PM – 3:00 PM)</option>
+              <option value="Evening (5:00 PM – 8:30 PM)">Evening (5:00 PM – 8:30 PM)</option>
+            </select>
+            <span class="trial-error" id="terr-timing"></span>
+          </div>
+
+          <!-- ── SUBMIT ── -->
+          <button type="submit" class="btn btn-primary trial-submit-btn" id="trial-submit-btn">
+            <span class="btn-text">Submit Application</span>
+            <i class="fas fa-paper-plane btn-icon"></i>
+          </button>
+
+          <!-- Status message -->
+          <div class="form-status" id="trial-form-status" aria-live="polite"></div>
+
+        </form>
+        <!-- END trial form -->
+
+      </div>
+      <!-- END PANEL: TRIAL -->
+
+    </div>
+    <!-- ██  END CONTENT PANELS WRAPPER  ██ -->
+
+
+  </main>
+  <!-- ██  END MAIN CONTENT  ██ -->
+
+
+  <!-- ============================================================
+       ██  FOOTER  ██
+       Simple bottom bar with copyright and quick social links.
+  ============================================================ -->
+  <footer class="site-footer">
+
+    <div class="footer-inner">
+
+      <!-- Left: gym name -->
+      <div class="footer-brand">
+        <span class="footer-name">THE VIBE BOXING CLUB</span>
+        <span class="footer-copy">© 2026 All Rights Reserved</span>
+      </div>
+
+      <!-- Centre: quick links -->
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="#home" data-scroll>Home</a>
+        <a href="#coaches" data-scroll>Coaches</a>
+        <a href="#" data-open-panel="boxing">Plans</a>
+        <a href="#" data-open-panel="contact">Contact</a>
+      </nav>
+
+      <!-- Right: social icons with real links -->
+      <div class="footer-social">
+        <a href="https://www.instagram.com/thevibeboxingclub?igsh=NWg4dDg2OWRmdHlp" aria-label="Instagram"
+          target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/share/1BE9gyTsdm/" aria-label="Facebook" target="_blank" rel="noopener"><i
+            class="fab fa-facebook-f"></i></a>
+        <a href="https://www.tiktok.com/@vibeboxingclub?_r=1&_t=ZS-96CDLxa6qW8" aria-label="TikTok" target="_blank"
+          rel="noopener"><i class="fab fa-tiktok"></i></a>
+        <a href="https://youtube.com/@vibeboxingclub?si=V-xsx8dIC3kCHtj8" aria-label="YouTube" target="_blank"
+          rel="noopener"><i class="fab fa-youtube"></i></a>
+      </div>
+
+    </div>
+
+  </footer>
+  <!-- ██  END FOOTER  ██ -->
+
+
+  <!-- ============================================================
+       JAVASCRIPT FILE
+       Loaded at end of body so all HTML is parsed before script runs.
+  ============================================================ -->
+  <script src="script.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,1251 @@
+/*
+  ============================================================
+  VIBE GEARS — Store Stylesheet
+  File: vibestore.css
+  Matches The Vibe Boxing Club dark industrial theme exactly.
+  ============================================================
+  TABLE OF CONTENTS:
+    1.  CSS Variables (same tokens as main site)
+    2.  Reset & Base
+    3.  Store Header
+    4.  Section Tab Bar
+    5.  Main Content Area
+    6.  Products Section Header
+    7.  Products Grid (4-col desktop / 2-col mobile)
+    8.  Product Card
+    9.  Product Image & Placeholder
+    10. Product Info (name, desc, price, button)
+    11. Discount Card Extras
+    12. No Results State
+    13. Order Modal
+    14. Payment Buttons
+    15. Order Form
+    16. Footer
+    17. Animations (minimal — fade in only)
+    18. Responsive / Mobile
+  ============================================================
+*/
+
+
+/* ============================================================
+   1. CSS VARIABLES
+   Identical to main site — keeps visual consistency.
+   ============================================================ */
+:root {
+  --clr-black:       #0a0a0a;
+  --clr-dark:        #111111;
+  --clr-dark-mid:    #1a1a1a;
+  --clr-dark-light:  #242424;
+  --clr-border:      #2e2e2e;
+
+  --clr-red:         #c8102e;
+  --clr-red-dim:     #8b0c1e;
+  --clr-red-glow:    rgba(200, 16, 46, 0.25);
+
+  --clr-white:       #f5f5f5;
+  --clr-grey-light:  #a0a0a0;
+  --clr-grey-mid:    #666666;
+
+  --font-display:    'Oswald', sans-serif;
+  --font-body:       'Barlow', sans-serif;
+
+  --space-xs:   4px;
+  --space-sm:   8px;
+  --space-md:   16px;
+  --space-lg:   24px;
+  --space-xl:   40px;
+  --space-xxl:  64px;
+
+  --header-height: 68px;  /* Store header slightly smaller than main site */
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --dur-fast: 180ms;
+  --dur-mid:  320ms;
+}
+
+
+/* ============================================================
+   2. RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+ul, ol { list-style: none; }
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a { text-decoration: none; color: inherit; }
+
+button, input, select, textarea { font: inherit; border: none; outline: none; background: none; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family:      var(--font-body);
+  background-color: var(--clr-dark);
+  color:            var(--clr-white);
+  line-height:      1.6;
+  overflow-x:       hidden;
+  min-height:       100vh;
+  /* Subtle grain texture — same as main site */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* Accent colour class — used on inline text */
+.accent { color: var(--clr-red); }
+
+
+/* ============================================================
+   3. STORE HEADER
+   Fixed top bar. Blurred dark glass background.
+   Contains: logo block | search bar | hamburger (mobile)
+   ============================================================ */
+
+.store-header {
+  position:         fixed;
+  top:              0;
+  left:             0;
+  right:            0;
+  height:           var(--header-height);
+  z-index:          1000;
+  display:          flex;
+  align-items:      center;
+  gap:              var(--space-lg);
+  padding:          0 var(--space-xl);
+  background:       rgba(10, 10, 10, 0.88);
+  backdrop-filter:  blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom:    1px solid rgba(200, 16, 46, 0.2);
+  transition:       background var(--dur-mid) var(--ease-out),
+                    box-shadow var(--dur-mid) var(--ease-out);
+}
+
+/* Darker header on scroll — added by JS */
+.store-header.scrolled {
+  background:    rgba(5, 5, 5, 0.98);
+  box-shadow:    0 4px 30px rgba(0, 0, 0, 0.6);
+  border-bottom-color: var(--clr-red);
+}
+
+/* ── Logo block: back arrow + store name ── */
+.store-logo-block {
+  display:     flex;
+  align-items: center;
+  gap:         var(--space-md);
+  flex-shrink: 0;
+}
+
+/* Back to main site arrow */
+.back-link {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           34px;
+  height:          34px;
+  border-radius:   50%;
+  background:      var(--clr-dark-light);
+  border:          1px solid var(--clr-border);
+  color:           var(--clr-grey-light);
+  font-size:       0.8rem;
+  transition:      background var(--dur-fast), color var(--dur-fast), transform var(--dur-fast);
+}
+
+.back-link:hover {
+  background: var(--clr-red);
+  color:      var(--clr-white);
+  transform:  translateX(-2px);
+}
+
+/* Store name block */
+.store-logo {
+  display:        flex;
+  flex-direction: column;
+  line-height:    1;
+}
+
+.store-logo-tag {
+  font-family:    var(--font-body);
+  font-size:      0.55rem;
+  letter-spacing: 0.3em;
+  color:          var(--clr-red);
+  text-transform: uppercase;
+  font-weight:    600;
+}
+
+.store-logo-name {
+  font-family:    var(--font-display);
+  font-size:      1.2rem;
+  font-weight:    700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color:          var(--clr-white);
+}
+
+.store-logo-accent {
+  color: var(--clr-red);
+}
+
+/* ── Search bar ── */
+.search-wrapper {
+  flex:           1;              /* Takes remaining header space */
+  position:       relative;
+  max-width:      480px;
+}
+
+/* Search icon inside input */
+.search-icon {
+  position:  absolute;
+  left:      14px;
+  top:       50%;
+  transform: translateY(-50%);
+  color:     var(--clr-grey-mid);
+  font-size: 0.85rem;
+  pointer-events: none;
+}
+
+.search-input {
+  width:          100%;
+  background:     var(--clr-dark-light);
+  border:         1px solid var(--clr-border);
+  border-radius:  var(--radius-sm);
+  padding:        10px 40px 10px 38px;   /* Left pad for icon, right pad for clear btn */
+  color:          var(--clr-white);
+  font-size:      0.85rem;
+  transition:     border-color var(--dur-fast), box-shadow var(--dur-fast);
+}
+
+.search-input:focus {
+  border-color: var(--clr-red);
+  box-shadow:   0 0 0 3px var(--clr-red-glow);
+}
+
+.search-input::placeholder { color: var(--clr-grey-mid); }
+
+/* Clear (✕) button inside search input */
+.search-clear {
+  position:   absolute;
+  right:      10px;
+  top:        50%;
+  transform:  translateY(-50%);
+  color:      var(--clr-grey-mid);
+  font-size:  0.75rem;
+  cursor:     pointer;
+  padding:    4px;
+  transition: color var(--dur-fast);
+}
+
+.search-clear:hover { color: var(--clr-white); }
+
+/* ── Hamburger (mobile only — hidden on desktop) ── */
+.store-hamburger {
+  display:        none;
+  flex-direction: column;
+  gap:            5px;
+  cursor:         pointer;
+  padding:        var(--space-sm);
+  margin-left:    auto;
+}
+
+.store-hamburger span {
+  display:          block;
+  width:            22px;
+  height:           2px;
+  background-color: var(--clr-white);
+  border-radius:    2px;
+}
+
+
+/* ============================================================
+   4. SECTION TAB BAR
+   Sits below the fixed header.
+   Contains: All Items | Special Discounts tabs
+   ============================================================ */
+
+.section-tabs {
+  position:         sticky;
+  top:              var(--header-height);    /* Sticks just below header */
+  z-index:          900;
+  display:          flex;
+  gap:              0;
+  background:       var(--clr-dark-mid);
+  border-bottom:    1px solid var(--clr-border);
+  padding:          0 var(--space-xl);
+}
+
+/* Each tab button */
+.tab-btn {
+  display:        flex;
+  align-items:    center;
+  gap:            var(--space-sm);
+  padding:        14px var(--space-xl);
+  font-family:    var(--font-display);
+  font-size:      0.85rem;
+  font-weight:    600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color:          var(--clr-grey-light);
+  cursor:         pointer;
+  border-bottom:  3px solid transparent;    /* Becomes red when active */
+  transition:     color        var(--dur-fast),
+                  border-color var(--dur-fast),
+                  background   var(--dur-fast);
+}
+
+.tab-btn:hover {
+  color:       var(--clr-white);
+  background:  rgba(255,255,255,0.04);
+}
+
+/* Active tab — red underline, white text */
+.tab-btn.tab-active {
+  color:         var(--clr-white);
+  border-bottom-color: var(--clr-red);
+}
+
+.tab-btn i { color: var(--clr-red); font-size: 0.8rem; }
+
+
+/* ============================================================
+   5. MAIN CONTENT AREA
+   Padded from top to clear fixed header + tab bar.
+   ============================================================ */
+
+.store-main {
+  padding-top:  calc(var(--header-height) + 52px);  /* header + tab bar height */
+  padding-bottom: var(--space-xxl);
+  min-height:   100vh;
+}
+
+
+/* ============================================================
+   6. PRODUCTS SECTION HEADER
+   Title + count / discount note
+   ============================================================ */
+
+.products-section {
+  padding: var(--space-xl) var(--space-xl);
+}
+
+.products-section-header {
+  display:        flex;
+  align-items:    baseline;
+  gap:            var(--space-lg);
+  margin-bottom:  var(--space-xl);
+  flex-wrap:      wrap;
+}
+
+.products-title {
+  font-family:    var(--font-display);
+  font-size:      clamp(1.8rem, 4vw, 2.8rem);
+  font-weight:    700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height:    1;
+}
+
+/* Live count of search results */
+.products-count {
+  font-family:    var(--font-body);
+  font-size:      0.8rem;
+  color:          var(--clr-grey-mid);
+  font-weight:    500;
+}
+
+/* Discount section note */
+.discount-note {
+  font-size:  0.85rem;
+  color:      var(--clr-grey-light);
+  display:    flex;
+  align-items: center;
+  gap:        var(--space-sm);
+}
+
+.discount-note i { color: var(--clr-red); }
+
+
+/* ============================================================
+   7. PRODUCTS GRID
+   Desktop:  4 columns
+   Tablet:   2 columns (auto-fit kicks in)
+   Mobile:   2 columns (explicit override in media query)
+   ============================================================ */
+
+.products-grid {
+  display:                grid;
+  grid-template-columns:  repeat(4, 1fr);    /* 4 columns on desktop */
+  gap:                    var(--space-lg);
+}
+
+
+/* ============================================================
+   8. PRODUCT CARD
+   Container for each product.
+   Minimal hover animation — just a subtle lift.
+   ============================================================ */
+
+.product-card {
+  background:     var(--clr-dark);
+  border:         1px solid var(--clr-border);
+  border-radius:  var(--radius-md);
+  overflow:       hidden;
+  display:        flex;
+  flex-direction: column;
+
+  /* Simple fade-in animation on page load */
+  animation: cardFadeIn 0.4s var(--ease-out) both;
+
+  /* Hover: slight lift + red border */
+  transition:     transform    var(--dur-mid) var(--ease-out),
+                  border-color var(--dur-mid),
+                  box-shadow   var(--dur-mid) var(--ease-out);
+}
+
+.product-card:hover {
+  transform:    translateY(-4px);
+  border-color: var(--clr-red);
+  box-shadow:   0 12px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Discount variant — starts with a red tint */
+.discount-card {
+  background: linear-gradient(160deg, rgba(200,16,46,0.06) 0%, var(--clr-dark) 60%);
+  border-color: rgba(200,16,46,0.3);
+}
+
+
+/* ============================================================
+   9. PRODUCT IMAGE AREA
+   Square-ish image container.
+   Placeholder shown until real image is added.
+   ============================================================ */
+
+.product-image {
+  position:    relative;
+  aspect-ratio: 4/3;             /* Consistent card proportions */
+  background:  var(--clr-dark-light);
+  overflow:    hidden;
+}
+
+/* Actual product image tag */
+.product-image img {
+  width:        100%;
+  height:       100%;
+  object-fit:   cover;
+  object-position: center;
+  transition:   transform var(--dur-mid) var(--ease-out);
+}
+
+/* Slight zoom on card hover */
+.product-card:hover .product-image img {
+  transform: scale(1.04);
+}
+
+/* Placeholder — shown when no image is set */
+.product-img-placeholder {
+  position:       absolute;
+  inset:          0;
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  justify-content: center;
+  gap:            var(--space-sm);
+  color:          var(--clr-grey-mid);
+  font-size:      0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border:         2px dashed var(--clr-border);
+}
+
+.product-img-placeholder i {
+  font-size:  2.5rem;
+  color:      var(--clr-dark-light);
+  border:     2px solid var(--clr-border);
+  border-radius: 50%;
+  padding:    16px;
+}
+
+/* "10% OFF for Members" badge — top right of image */
+.member-badge {
+  position:       absolute;
+  top:            var(--space-sm);
+  right:          var(--space-sm);
+  background:     rgba(10,10,10,0.9);
+  color:          #f0c040;         /* Gold colour for member badge */
+  font-size:      0.6rem;
+  font-weight:    700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding:        4px 8px;
+  border-radius:  var(--radius-sm);
+  border:         1px solid rgba(240,192,64,0.3);
+  display:        flex;
+  align-items:    center;
+  gap:            4px;
+}
+
+.member-badge i { font-size: 0.55rem; }
+
+/* "SALE" / "BUNDLE" badge for discount cards */
+.discount-badge {
+  position:       absolute;
+  top:            var(--space-sm);
+  left:           var(--space-sm);
+  background:     var(--clr-red);
+  color:          var(--clr-white);
+  font-family:    var(--font-display);
+  font-size:      0.65rem;
+  font-weight:    700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding:        4px 10px;
+  border-radius:  var(--radius-sm);
+}
+
+
+/* ============================================================
+   10. PRODUCT INFO BLOCK
+   Name, description, pricing, buy button
+   ============================================================ */
+
+.product-info {
+  padding:        var(--space-md);
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-sm);
+  flex:           1;              /* Stretches so all cards same height */
+}
+
+/* Product name — red per design spec */
+.product-name {
+  font-family:    var(--font-display);
+  font-size:      1rem;
+  font-weight:    700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color:          var(--clr-red);   /* RED — as specified */
+  line-height:    1.2;
+}
+
+/* Short description */
+.product-desc {
+  font-size:   0.8rem;
+  color:       var(--clr-grey-light);
+  line-height: 1.55;
+  flex:        1;                 /* Pushes pricing + button to bottom */
+}
+
+/* Pricing block */
+.product-pricing {
+  display:        flex;
+  flex-direction: column;
+  gap:            3px;
+}
+
+/* Actual price — white per design spec */
+.product-price {
+  font-family:    var(--font-display);
+  font-size:      1.3rem;
+  font-weight:    700;
+  color:          var(--clr-white);   /* WHITE — as specified */
+  letter-spacing: -0.01em;
+}
+
+/* Member discount price — gold/muted */
+.member-price {
+  font-size:  0.72rem;
+  color:      #f0c040;
+  font-weight: 600;
+  display:    flex;
+  align-items: center;
+  gap:        4px;
+}
+
+.member-price i { font-size: 0.6rem; }
+
+/* ── Discount pricing variant (shows original strikethrough) ── */
+.discount-pricing .price-row {
+  display:     flex;
+  align-items: center;
+  gap:         var(--space-sm);
+  margin-bottom: 2px;
+}
+
+/* Original price — crossed out */
+.original-price {
+  font-size:         0.85rem;
+  color:             var(--clr-grey-mid);
+  text-decoration:   line-through;
+  font-family:       var(--font-display);
+}
+
+/* Percentage off badge */
+.discount-tag {
+  background:     var(--clr-red);
+  color:          var(--clr-white);
+  font-size:      0.6rem;
+  font-weight:    700;
+  padding:        2px 7px;
+  border-radius:  var(--radius-sm);
+  font-family:    var(--font-body);
+  letter-spacing: 0.05em;
+}
+
+/* New lower price */
+.discount-price {
+  color:          var(--clr-white);
+}
+
+/* ── Buy Now Button ── */
+.btn-buy {
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
+  gap:              var(--space-sm);
+  width:            100%;
+  padding:          10px var(--space-md);
+  background-color: var(--clr-red);
+  color:            var(--clr-white);
+  border-radius:    var(--radius-sm);
+  font-family:      var(--font-display);
+  font-size:        0.8rem;
+  font-weight:      600;
+  letter-spacing:   0.12em;
+  text-transform:   uppercase;
+  cursor:           pointer;
+  margin-top:       auto;           /* Pushes button to bottom of card */
+  transition:       background   var(--dur-fast),
+                    transform    var(--dur-fast),
+                    box-shadow   var(--dur-fast);
+}
+
+.btn-buy:hover {
+  background:  var(--clr-red-dim);
+  transform:   translateY(-1px);
+  box-shadow:  0 6px 20px var(--clr-red-glow);
+}
+
+.btn-buy i { font-size: 0.75rem; }
+
+
+/* ============================================================
+   11. DISCOUNT EMPTY STATE
+   Shown in Special Discounts tab when all products are commented out
+   ============================================================ */
+
+.discount-empty-state {
+  grid-column:    1 / -1;           /* Span full grid width */
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  justify-content: center;
+  gap:            var(--space-md);
+  padding:        var(--space-xxl);
+  text-align:     center;
+  color:          var(--clr-grey-mid);
+}
+
+.discount-empty-state i {
+  font-size:  3rem;
+  color:      var(--clr-border);
+}
+
+.discount-empty-state h3 {
+  font-family:    var(--font-display);
+  font-size:      1.2rem;
+  font-weight:    700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color:          var(--clr-grey-light);
+}
+
+.discount-empty-state p {
+  font-size: 0.85rem;
+}
+
+.discount-empty-state .tab-btn {
+  border:         1px solid var(--clr-red);
+  color:          var(--clr-red);
+  border-radius:  var(--radius-sm);
+  margin-top:     var(--space-sm);
+  padding:        10px var(--space-xl);
+}
+
+.discount-empty-state .tab-btn:hover {
+  background: var(--clr-red);
+  color:      var(--clr-white);
+}
+
+
+/* ============================================================
+   12. NO RESULTS STATE
+   Shown below grid when search returns 0 matches
+   ============================================================ */
+
+.no-results {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  gap:            var(--space-md);
+  padding:        var(--space-xxl);
+  text-align:     center;
+  color:          var(--clr-grey-mid);
+}
+
+.no-results i {
+  font-size:  2.5rem;
+  color:      var(--clr-border);
+}
+
+.no-results p { font-size: 0.9rem; }
+
+.no-results button {
+  background:     var(--clr-dark-light);
+  border:         1px solid var(--clr-border);
+  color:          var(--clr-grey-light);
+  padding:        8px 20px;
+  border-radius:  var(--radius-sm);
+  cursor:         pointer;
+  font-size:      0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition:     background var(--dur-fast), color var(--dur-fast);
+}
+
+.no-results button:hover {
+  background: var(--clr-red);
+  color:      var(--clr-white);
+}
+
+
+/* ============================================================
+   13. ORDER MODAL
+   Full-screen dark overlay + centred modal box
+   ============================================================ */
+
+/* Overlay: full viewport, dark semi-transparent */
+.modal-overlay {
+  position:         fixed;
+  inset:            0;
+  background:       rgba(0, 0, 0, 0.85);
+  z-index:          2000;
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
+  padding:          var(--space-md);
+  backdrop-filter:  blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation:        modalFadeIn 0.2s var(--ease-out) both;
+}
+
+/* Modal box itself */
+.modal-box {
+  background:     var(--clr-dark-mid);
+  border:         1px solid var(--clr-border);
+  border-radius:  var(--radius-lg);
+  width:          100%;
+  max-width:      520px;
+  max-height:     90vh;
+  overflow-y:     auto;
+  padding:        var(--space-xl);
+  position:       relative;
+
+  /* Custom scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--clr-red) var(--clr-dark);
+
+  animation: modalSlideUp 0.25s var(--ease-out) both;
+}
+
+/* ── Modal Header ── */
+.modal-header {
+  display:          flex;
+  justify-content:  space-between;
+  align-items:      flex-start;
+  margin-bottom:    var(--space-lg);
+}
+
+.modal-tag {
+  display:        block;
+  font-family:    var(--font-body);
+  font-size:      0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color:          var(--clr-red);
+  font-weight:    600;
+  margin-bottom:  4px;
+}
+
+.modal-product-name {
+  font-family:    var(--font-display);
+  font-size:      1.4rem;
+  font-weight:    700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color:          var(--clr-white);
+}
+
+/* Close (✕) button */
+.modal-close {
+  width:          34px;
+  height:         34px;
+  border-radius:  50%;
+  background:     var(--clr-dark-light);
+  color:          var(--clr-grey-light);
+  font-size:      0.85rem;
+  cursor:         pointer;
+  display:        flex;
+  align-items:    center;
+  justify-content: center;
+  border:         1px solid var(--clr-border);
+  flex-shrink:    0;
+  transition:     background var(--dur-fast), color var(--dur-fast);
+}
+
+.modal-close:hover {
+  background: var(--clr-red);
+  color:      var(--clr-white);
+}
+
+/* ── Delivery Info ── */
+.modal-delivery-info {
+  background:     var(--clr-dark-light);
+  border:         1px solid var(--clr-border);
+  border-radius:  var(--radius-md);
+  padding:        var(--space-md);
+  margin-bottom:  var(--space-lg);
+}
+
+/* COD badge strip */
+.delivery-badge {
+  display:        flex;
+  align-items:    center;
+  gap:            var(--space-sm);
+  font-size:      0.8rem;
+  color:          var(--clr-grey-light);
+  padding-bottom: var(--space-sm);
+  border-bottom:  1px solid var(--clr-border);
+  margin-bottom:  var(--space-sm);
+}
+
+.delivery-badge i { color: var(--clr-red); }
+.delivery-badge strong { color: var(--clr-white); }
+
+/* Price summary rows */
+.modal-price-summary {
+  display:         flex;
+  justify-content: space-between;
+  align-items:     center;
+  font-size:       0.85rem;
+  padding:         3px 0;
+}
+
+.modal-price-label { color: var(--clr-grey-light); }
+.modal-price-value { color: var(--clr-white); font-weight: 600; }
+
+/* Total row — larger */
+.modal-total-row {
+  border-top:     1px solid var(--clr-border);
+  margin-top:     var(--space-sm);
+  padding-top:    var(--space-sm);
+}
+
+.modal-total {
+  font-family:    var(--font-display);
+  font-size:      1.1rem;
+  color:          var(--clr-white);
+}
+
+
+/* ============================================================
+   14. PAYMENT BUTTONS
+   ============================================================ */
+
+.payment-options {
+  margin-bottom: var(--space-lg);
+}
+
+.payment-label {
+  font-size:      0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color:          var(--clr-grey-mid);
+  font-weight:    600;
+  margin-bottom:  var(--space-sm);
+}
+
+.payment-btns {
+  display: flex;
+  gap:     var(--space-sm);
+  flex-wrap: wrap;
+}
+
+/* Base payment button */
+.payment-btn {
+  flex:           1;
+  min-width:      100px;
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  gap:            4px;
+  padding:        12px var(--space-md);
+  border-radius:  var(--radius-sm);
+  background:     var(--clr-dark-light);
+  border:         1px solid var(--clr-border);
+  color:          var(--clr-grey-light);
+  font-size:      0.75rem;
+  font-weight:    600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor:         pointer;
+  position:       relative;
+  transition:     background var(--dur-fast), border-color var(--dur-fast), color var(--dur-fast);
+}
+
+/* Active selected payment method */
+.payment-btn-active {
+  background:   rgba(200, 16, 46, 0.15);
+  border-color: var(--clr-red);
+  color:        var(--clr-white);
+}
+
+/* Disabled — eSewa / Khalti not yet active */
+.payment-btn-disabled {
+  opacity:  0.4;
+  cursor:   not-allowed;
+}
+
+/* "Soon" pill badge on disabled buttons */
+.coming-soon-tag {
+  position:       absolute;
+  top:            -8px;
+  right:          -4px;
+  background:     var(--clr-dark-light);
+  border:         1px solid var(--clr-border);
+  color:          var(--clr-grey-mid);
+  font-size:      0.5rem;
+  letter-spacing: 0.1em;
+  padding:        2px 5px;
+  border-radius:  var(--radius-sm);
+  text-transform: uppercase;
+}
+
+.payment-btn i { font-size: 1rem; }
+
+
+/* ============================================================
+   15. ORDER FORM
+   ============================================================ */
+
+.order-form { display: flex; flex-direction: column; gap: var(--space-md); }
+
+/* Each label + input group */
+.order-form-group {
+  display:        flex;
+  flex-direction: column;
+  gap:            5px;
+}
+
+.order-form-group label {
+  font-size:      0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color:          var(--clr-grey-light);
+  font-weight:    600;
+  display:        flex;
+  align-items:    center;
+  gap:            6px;
+}
+
+.order-form-group label i { color: var(--clr-red); font-size: 0.65rem; }
+
+/* Input fields */
+.order-form-group input {
+  background:   var(--clr-dark-light);
+  border:       1px solid var(--clr-border);
+  border-radius: var(--radius-sm);
+  padding:      10px var(--space-md);
+  color:        var(--clr-white);
+  font-size:    0.88rem;
+  transition:   border-color var(--dur-fast), box-shadow var(--dur-fast);
+}
+
+.order-form-group input:focus {
+  border-color: var(--clr-red);
+  box-shadow:   0 0 0 3px var(--clr-red-glow);
+}
+
+.order-form-group input::placeholder { color: var(--clr-grey-mid); }
+
+/* Validation error message */
+.order-error {
+  font-size:  0.72rem;
+  color:      #ff4d4d;
+  min-height: 1em;
+}
+
+/* Submit buttons row */
+.order-submit-group {
+  display:  flex;
+  gap:      var(--space-sm);
+  flex-wrap: wrap;
+  margin-top: var(--space-sm);
+}
+
+/* Place Order button — matches main site btn-primary */
+.btn-order-submit {
+  flex:           1;
+  display:        flex;
+  align-items:    center;
+  justify-content: center;
+  gap:            var(--space-sm);
+  padding:        12px var(--space-lg);
+  background:     var(--clr-red);
+  color:          var(--clr-white);
+  border-radius:  var(--radius-sm);
+  font-family:    var(--font-display);
+  font-size:      0.85rem;
+  font-weight:    600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor:         pointer;
+  transition:     background var(--dur-fast), transform var(--dur-fast), box-shadow var(--dur-fast);
+}
+
+.btn-order-submit:hover {
+  background:  var(--clr-red-dim);
+  transform:   translateY(-1px);
+  box-shadow:  0 6px 20px var(--clr-red-glow);
+}
+
+/* WhatsApp button — green */
+.btn-whatsapp {
+  flex:           1;
+  display:        flex;
+  align-items:    center;
+  justify-content: center;
+  gap:            var(--space-sm);
+  padding:        12px var(--space-lg);
+  background:     #25D366;      /* WhatsApp brand green */
+  color:          #fff;
+  border-radius:  var(--radius-sm);
+  font-family:    var(--font-display);
+  font-size:      0.85rem;
+  font-weight:    600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor:         pointer;
+  transition:     background var(--dur-fast), transform var(--dur-fast);
+}
+
+.btn-whatsapp:hover {
+  background:  #1da851;
+  transform:   translateY(-1px);
+}
+
+/* Form status message */
+.order-status {
+  font-size:    0.85rem;
+  text-align:   center;
+  padding:      var(--space-md);
+  border-radius: var(--radius-sm);
+  margin-top:   var(--space-sm);
+  display:      none;
+}
+
+.order-success {
+  display:     block;
+  background:  rgba(0, 200, 100, 0.1);
+  border:      1px solid rgba(0, 200, 100, 0.3);
+  color:       #4caf50;
+}
+
+.order-error-msg {
+  display:     block;
+  background:  rgba(200, 16, 46, 0.1);
+  border:      1px solid rgba(200, 16, 46, 0.3);
+  color:       #ff4d4d;
+}
+
+
+/* ============================================================
+   16. FOOTER
+   ============================================================ */
+
+.store-footer {
+  background:     var(--clr-dark-mid);
+  border-top:     1px solid var(--clr-border);
+  padding:        var(--space-lg) var(--space-xl);
+}
+
+.store-footer-inner {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  gap:             var(--space-lg);
+  flex-wrap:       wrap;
+}
+
+.footer-brand-name {
+  font-family:    var(--font-display);
+  font-size:      0.8rem;
+  font-weight:    700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color:          var(--clr-white);
+}
+
+.footer-copy {
+  font-size: 0.7rem;
+  color:     var(--clr-grey-mid);
+}
+
+.footer-back-link {
+  display:     flex;
+  align-items: center;
+  gap:         var(--space-sm);
+  font-size:   0.75rem;
+  color:       var(--clr-grey-light);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  transition:  color var(--dur-fast);
+}
+
+.footer-back-link:hover { color: var(--clr-red); }
+
+
+/* ============================================================
+   17. ANIMATIONS (minimal — only what's needed)
+   ============================================================ */
+
+/* Product card fade in on load */
+@keyframes cardFadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Stagger each card slightly */
+.product-card:nth-child(2) { animation-delay: 0.05s; }
+.product-card:nth-child(3) { animation-delay: 0.10s; }
+.product-card:nth-child(4) { animation-delay: 0.15s; }
+.product-card:nth-child(5) { animation-delay: 0.20s; }
+
+/* Modal fade in */
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Modal slide up */
+@keyframes modalSlideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+
+/* ============================================================
+   18. RESPONSIVE / MOBILE
+   ============================================================ */
+
+/* ── Tablet: ≤ 900px → 2-column grid ── */
+@media (max-width: 900px) {
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);   /* 2 columns on tablet */
+  }
+
+  .store-header {
+    padding: 0 var(--space-md);
+    gap:     var(--space-sm);
+  }
+
+  .search-wrapper {
+    max-width: none;
+  }
+
+  .section-tabs {
+    padding: 0 var(--space-md);
+    overflow-x: auto;              /* Allow tabs to scroll if many */
+  }
+
+  .tab-btn {
+    padding:   12px var(--space-lg);
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+
+  .products-section {
+    padding: var(--space-lg) var(--space-md);
+  }
+}
+
+/* ── Mobile: ≤ 600px ── */
+@media (max-width: 600px) {
+
+  /* 2 columns stays on mobile as per design spec */
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-sm);
+  }
+
+  /* Tighter card padding on small screens */
+  .product-info {
+    padding: var(--space-sm);
+    gap:     4px;
+  }
+
+  .product-name  { font-size: 0.85rem; }
+  .product-desc  { font-size: 0.72rem; }
+  .product-price { font-size: 1.1rem;  }
+  .member-price  { font-size: 0.65rem; }
+  .btn-buy       { font-size: 0.7rem; padding: 8px var(--space-sm); }
+
+  /* Compact member badge */
+  .member-badge {
+    font-size: 0.5rem;
+    padding:   3px 5px;
+  }
+
+  /* Modal full-width on mobile */
+  .modal-box {
+    padding:        var(--space-lg);
+    border-radius:  var(--radius-md);
+    max-height:     95vh;
+  }
+
+  /* Stack submit buttons vertically on mobile */
+  .order-submit-group {
+    flex-direction: column;
+  }
+
+  /* Header: hide store tag on very small screens */
+  .store-logo-tag {
+    display: none;
+  }
+
+  /* Footer: stack vertically */
+  .store-footer-inner {
+    flex-direction: column;
+    text-align:     center;
+    gap:            var(--space-sm);
+  }
+
+  .payment-btns {
+    flex-direction: column;
+  }
+
+  .payment-btn {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
